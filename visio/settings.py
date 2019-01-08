@@ -25,7 +25,7 @@ SECRET_KEY = 'ads-lri4-2(#vio610o5o@5c0$e6ce)jl+t8i4-u1@@%%gil$%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['www.infsolution.com.br']
+ALLOWED_HOSTS = ['www.infsolution.com.br','localhost']
 
 
 # Application definition
@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap',
+    'fontawesome',
+    'makevisio.apps.MakevisioConfig',
 ]
 
 MIDDLEWARE = [
@@ -119,3 +122,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR,'static/')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
