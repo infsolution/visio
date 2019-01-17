@@ -9,7 +9,7 @@ def search_google(request):
 		url = 'https://www.googleapis.com/customsearch/v1'
 		params = {"key":"AIzaSyB_Uc-MGGJuKcZHGTU29UtbeL_V9H90Dgw", 
 			"cx":"000119369848927943107:8no6nr65eju", 
-			"q":request.GET.get('busca')}
+			"q":request.GET.get('busca').encode('utf-8')}
 		try:
 			response = requests.get(url, params)
 			print(response.json()['items'])
