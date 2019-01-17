@@ -3,5 +3,5 @@ from django.urls import path, include
 from makevisio import views
 urlpatterns = [
     path('',views.index, name='index'),
-    path('/buscar',views.search_google, name='buscar_item'),
+    path('buscar',views.search_google, name='buscar_item'),
 ]
