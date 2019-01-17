@@ -1,0 +1,49 @@
+{% extends 'makevisio/base.html' %}
+{% block head %}
+<script>
+function show_content(element, text){
+	var show_item = document.getElementById(element).innerHTML=document.getElementById(text).innerHTML;
+}
+</script>
+
+{% endblock %}
+
+
+
+{% block body %}
+	<div class="row">
+		<div class="col-md-4">
+			<h2><a href="#" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">LINKS</a></h2>
+			{% for link in values %}
+				<span onmouseenter="audio_desc('content-resume')" onclick="show_content('show','{{link.title}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">{{link.displayLink}}</span>
+			{% endfor %}
+		</div>
+		<div class="col-md-8">
+			<h2><a href="#" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">CONTEÚDO</a></h2>
+			<span id="show">
+				<h1>CLIQUE EM UM LINK</h1>
+			</span>
+			{% for item in values %}
+			<span id="{{item.title}}" style="display: none">
+				<p>{{ item.title }}</p>
+				<p>{{item.snippet}}</p>
+				<p><a href="{{item.link}}">Visitar</a></p>
+			</span>
+			
+
+			{% endfor %}
+			
+		</div>
+			
+	</div>
+{% endblock %}
+
+<!--
+	<ul>
+			{% for item in values %}
+
+			<li>{{ item.title }}</li>
+
+			{% endfor %}
+			</ul>
+			-->

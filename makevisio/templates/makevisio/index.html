@@ -1,4 +1,31 @@
-{% extends 'makevisio/base.html' %}
-{% block body %}
-<h1>MakeVisio</h1>
-{% endblock %}
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<title>MakeVisio</title>
+	<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fontawesome/css/fontawesome-all.min.css' %}">
+	{% block head %}
+    {% endblock %}
+
+</head>
+
+<body style="margin-top: 18em;">
+	<div class="container-fluid">
+		<div class="d-flex justify-content-center">
+			<!--h1 class="">MakeVisio</h1-->
+			<form class="form-inline" method="GET" action="{% url 'google' %}">
+				<input class="form-control mr-sm-2" type="search" placeholder="O que procura?" name="busca">
+			    <button class="btn btn-primary" type="submit">Search</button>
+			</form>
+		</div>
+		
+	</div>
+	<script defer src="{% static 'fontawesome/js/fontawesome-all.min.js' %}"></script>
+	<script src="{% static 'bootstrap/js/jquery.min.js' %}"></script>
+	<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+	<script src="{% static 'admin/js/myfunctions.js' %}"></script>	
+</body>
+</html>
