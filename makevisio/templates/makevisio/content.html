@@ -7,6 +7,9 @@
 	<div class="row">
 		<div class="col-md-4">
 			<h2><a href="#" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">LINKS</a></h2>
+			{% if error %}
+			<span>{{error}}</span>
+			{% endif %}
 			{% for link in values %}
 				<span onmouseenter="audio_desc('content-resume')" onclick="show_content('show','{{link.title}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">{{link.displayLink}}</span>
 			{% endfor %}
