@@ -8,21 +8,32 @@
 	<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'fontawesome/css/fontawesome-all.min.css' %}">
 	{% block head %}
+	<style type="text/css">
+		.row{height: 100vh;}
+	</style>
     {% endblock %}
 
 </head>
 
-<body style="margin-top: 18em;">
+<body>
 	<div class="container-fluid">
-		<div class="d-flex justify-content-center">
-			<!--h1 class="">MakeVisio</h1-->
+		<div class="row justify-content-center align-items-center">
 			<form class="form-inline" method="GET" action="{% url 'buscar_item' %}">
-				<input class="form-control mr-sm-2" type="search" placeholder="O que procura?" name="busca">
+				<div class="input-group mb-3">
+					<input class="form-control" type="search" placeholder="MAKEVISIO" name="busca">
+				<div class="input-group-append">
 			    <button class="btn btn-primary" type="submit">Search</button>
+				</div>
+				</div>
+
 			</form>
+
+
 		</div>
 		
 	</div>
+
+
 	<script defer src="{% static 'fontawesome/js/fontawesome-all.min.js' %}"></script>
 	<script src="{% static 'bootstrap/js/jquery.min.js' %}"></script>
 	<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>

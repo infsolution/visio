@@ -17,7 +17,6 @@ def search_google(request):
 		except Exception as e:
 			print(e)
 			return render(request,'makevisio/content.html',{"error":e})
-		#search_data = json.loads(response.json())
 		return render(request,'makevisio/content.html',{'values':response.json()['items']})
 	else:
 		return render(request,'makevisio/content.html',{"error":"Sem resposta."})
