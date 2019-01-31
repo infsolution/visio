@@ -19,4 +19,5 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('makevisio.urls')),
+    path('api/iped/',include('iped.urls')),
 ]

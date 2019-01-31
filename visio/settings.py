@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'bootstrap',
     'fontawesome',
     'makevisio.apps.MakevisioConfig',
+    'iped.apps.IpedConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -83,7 +85,15 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS':
+    'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 5,
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+    'rest_framework.authentication.BasicAuthentication',
+    'rest_framework.authentication.SessionAuthentication',
+)
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
