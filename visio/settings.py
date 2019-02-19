@@ -41,8 +41,6 @@ INSTALLED_APPS = [
     'bootstrap',
     'fontawesome',
     'makevisio.apps.MakevisioConfig',
-    'iped.apps.IpedConfig',
-    'rest_framework',
 ]
 
 MIDDLEWARE = [
