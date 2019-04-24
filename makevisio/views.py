@@ -20,3 +20,9 @@ def search_google(request):
 		return render(request,'makevisio/content.html',{'values':response.json()['items']})
 	else:
 		return render(request,'makevisio/content.html',{"error":"Sem resposta."})
+
+
+
+def get_page(request):
+	if request.method == 'POST':
+		return render(request,'makevisio/page.html',{'link':request.POST['link']})
