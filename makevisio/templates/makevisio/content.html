@@ -27,13 +27,14 @@ function show_content(element, text){
 			<span id="{{item.title}}" style="display: none">
 				<p>{{ item.title }}</p>
 				<p>{{item.snippet}}</p>
-				<p><a href="{{item.link}}">Visitar</a></p>
+				<!--p><a href="{{item.link}}">Visitar</a></p-->
+				<form method="POST" action="{% url 'page' %}">
+					{% csrf_token %}
+					<input type="hidden" name="link" value="{{item.link}}">
+					<input type="submit" value="Visitar">
+				</form>
 			</span>
-			
-
 			{% endfor %}
-			
-		</div>
-			
+		</div>			
 	</div>
 {% endblock %}
