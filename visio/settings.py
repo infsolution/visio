@@ -26,7 +26,7 @@ SECRET_KEY = 'ads-lri4-2(#vio610o5o@5c0$e6ce)jl+t8i4-u1@@%%gil$%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['www.infsolution.com.br','localhost']
+ALLOWED_HOSTS = ['makevisio.infsolution.com.br','localhost']
 
 
 # Application definition
