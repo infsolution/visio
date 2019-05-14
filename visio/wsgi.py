@@ -16,7 +16,7 @@ import sys
 from django.core.wsgi import get_wsgi_application
 #teste de ignore numero cinco-----
 sys.path.append('/var/www/html/visio')
-sys.path.append('/var/www/html/venv/lib/python3.5/site-packages')
+sys.path.append('/var/www/html/penv/lib/python3.5/site-packages')
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'visio.settings')
 
 try:
