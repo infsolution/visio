@@ -1,36 +1,23 @@
+# -*- coding: utf-8 -*-
 from bs4 import BeautifulSoup
+from urllib.request import urlopen
 import requests
 import re
 class Page:
 	def __init__(self, url):
-		self.url = url
+		self.page = self.get_page(url)
+		self.title = self.page.title.string
+		self.h1 = self.page.h1.string
 
 	def __str__(self):
-		return self.get_page()
+		return self.page.title.string
 
-	def get_page(self):
+	def get_page(self, url):
 		try:
-			r = requests.get(self.url)
+			r = urlopen(url).read().decode('utf-8')
 		except Exception as e:
-			print("Connection error in "+self.url)
-			return None
-		return r.text
+			print(e)
+			return e
+		page = BeautifulSoup(r,'html.parser')
+		return page
 
-	def get_body(self):
-		pattern = re.compile(r'>(.*?)</body>')
-		return pattern.findall(self.get_page())
-	def  get_title(self):
-		pattern = re.compile(r'<title>(.*?)</title>')
-		return pattern.findall(self.get_page())
-	def get_title_h1(self):
-		pattern = re.compile(r'>(.*?)</h1>')
-		return pattern.findall(self.get_page())
-	def get_topics(self):
-		pattern = re.compile(r'<h4>(.*?)</h4>')
-		return pattern.findall(self.get_page())
-	def get_links(self):
-		pattern = re.compile(r'href="(.*?)"')
-		return pattern.findall(self.get_page())
-	def links(self):
-		pattern =re.compile(r'http?://')
-		return pattern.findall(self.get_links()[0])
