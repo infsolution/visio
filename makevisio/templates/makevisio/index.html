@@ -21,7 +21,7 @@
 			<form class="form-inline" method="POST" action="{% url 'buscar_item' %}">
 					{% csrf_token %}
 				<div class="input-group mb-3">
-					<input class="form-control" type="search" placeholder="MAKEVISIO" name="busca">
+					<input class="form-control" type="search" placeholder="MAKEVISIO" name="busca" required>
 				<div class="input-group-append">
 			    <button class="btn btn-primary" type="submit">Search</button>
 				</div>

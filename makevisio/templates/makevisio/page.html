@@ -24,12 +24,10 @@ function show_content(element, text){
 			<span id="show">
 				<h1>CLIQUE EM UM LINK</h1>
 			</span>
-			{% for key in page %}
+			{% for key, values in page.items %}
 			<span id="{{key}}" style="display: none">
-			{% endfor%}
-			{% for value in page.values %}
-				{% if value == 'links' %}
-				<p>{{ value }}</p>
+				{% if values|wordcount %}
+				<p>{{ values }}</p>
 				{% endif %}
 			</span>
 			{% endfor %}

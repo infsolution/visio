@@ -48,3 +48,4 @@ class Page:
 		self.add_h1()
 		self.add_content()
 		self.add_link()
+		
