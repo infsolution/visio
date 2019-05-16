@@ -9,7 +9,7 @@ def index(request):
 def search_google(request):
 	if request.POST.get('busca'):
 		if 'http' in request.POST.get('busca') or 'https' in request.POST.get('busca'):
-			return redirect('index') #get_page(request, request.POST.get('busca'))
+			return get_page(request, request.POST.get('busca'))
 		else:
 			url = 'https://www.googleapis.com/customsearch/v1'
 			params = {"key":"AIzaSyB_Uc-MGGJuKcZHGTU29UtbeL_V9H90Dgw", 
@@ -19,7 +19,7 @@ def search_google(request):
 				response = requests.get(url, params)
 				#print(response.json())
 			except Exception as e:
-				print(e)
+				print("Error: "+e)
 				return render(request,'makevisio/content.html',{"error":e})
 			return render(request,'makevisio/content.html',{'values':response.json()['items']})
 	else:
@@ -29,5 +29,4 @@ def search_google(request):
 
 def get_page(request,url):
 	page = Page(url)
-	print(url)
-	return render(request,'makevisio/page.html',{'link':''})
+	return render(request,'makevisio/page.html',{'page':page})
