@@ -27,14 +27,18 @@ class Page:
 
 	def add_title(self):
 		if self.page.title:
-			self.add_element('title',self.page.title.string)
+			self.add_element('título',self.page.title.string)
 	
 	def add_h1(self):
 		if self.page.h1:
-			self.add_element('titulo da página', self.page.h1.string)	
+			self.add_element('título da página', self.page.h1.string)	
 	def add_content(self):
-		if self.page.findAll('content'):
-			self.add_element('content',self.page.findAll('content'))
+		p_dic={}
+		if self.page.body.div:
+			content=self.page.body.findAll('p')
+			for p in range(len(content)):
+				p_dic[p]=content[p].string
+			self.add_element('conteúdo', p_dic)
 	def add_link(self):
 		link_dic={}
 		if self.page.findAll('a'):
@@ -43,9 +47,13 @@ class Page:
 				link_dic[link.string]=link['href']
 			self.add_element('links', link_dic)
 	
+	def add_form(self):
+		if self.page.form:
+			self.add_element('formulário', self.page.form)
 	def load_data(self):
-		self.add_title()
-		self.add_h1()
-		self.add_content()
 		self.add_link()
+		self.add_title()
+		#self.add_h1()
+		self.add_content()
+		self.add_form()
 		

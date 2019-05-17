@@ -26,19 +26,22 @@ function show_content(element, text){
 			</span>
 			{% for key, values in page.items %}
 			<span id="{{key}}" style="display: none">
-				{% if values|wordcount %}
+				{% if values.0 %}
 				<p>{{ values }}</p>
+				{% elif key == 'conteúdo' %}
+					{% for v in values.items %}
+					{% if v.1 %}
+					<p>{{v.1}}</p>
+					{% endif %}
+					{% endfor %}
+				{% else %}
+				{% for keylink, valueslink in values.items %}
+				<a href="{{ valueslink}}" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">{{keylink}}</a>
+				{% endfor %}
 				{% endif %}
 			</span>
 			{% endfor %}
-      <!--span id="{{page.h1}}" style="display: none">
-				<p>{{ page.title }}</p>
-			</span-->
-      <!--span id="links" style="display: none">
-      {% for link in page.links %}
-			  {{ link }}
-      {% endfor %}
-			</span-->
+   
 
 		</div>			
 	</div>
