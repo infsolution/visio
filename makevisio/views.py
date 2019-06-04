@@ -17,7 +17,6 @@ def search_google(request):
 				"q":request.GET.get('busca').encode('utf-8')}
 			try:
 				response = requests.get(url, params)
-				#print(response.json())
 			except Exception as e:
 				print("Error: "+e)
 				return render(request,'makevisio/content.html',{"error":e})

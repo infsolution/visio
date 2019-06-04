@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
+from django.core.files.storage import FileSystemStorage
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
+from .synthesizer import *
 import json
 import requests
 import re
@@ -28,6 +30,8 @@ class Page:
 	def add_title(self):
 		if self.page.title:
 			self.add_element('título',self.page.title.string)
+			synt = Synthesizer(self.page.title.string);
+
 	
 	def add_h1(self):
 		if self.page.h1:
