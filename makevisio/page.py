@@ -10,6 +10,7 @@ class Page:
 	def __init__(self, url):
 		self.page = self.get_page(url)
 		self.dic_page = {}
+		self.dic_path = {}
 		self.load_data()
 
 	def __str__(self):
@@ -30,7 +31,8 @@ class Page:
 	def add_title(self):
 		if self.page.title:
 			self.add_element('título',self.page.title.string)
-			synt = Synthesizer(self.page.title.string);
+			synt = Synthesizer()
+			path = synt.synthesizer(self.page.title.string)
 
 	
 	def add_h1(self):
@@ -61,3 +63,6 @@ class Page:
 		self.add_content()
 		self.add_form()
 		
+
+
+

@@ -28,6 +28,6 @@ def search_google(request):
 
 def get_page(request,url):
 	page = Page(url)
-	print(page.dic_page)
+	#print(page.dic_page)
 	return render(request,'makevisio/page.html',{'page':page.dic_page})
 
