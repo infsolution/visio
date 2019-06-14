@@ -1,18 +1,10 @@
 {% extends "makevisio/base.html" %}
 {% block head %}
-<script>
-function audio_desc(element){
-    const espeak_links = document.getElementById(element);
-    espeak_links.play(); 
-}
-function show_content(element, text){
-	var show_item = document.getElementById(element).innerHTML=document.getElementById(text).innerHTML;
-}
-</script>
+
 {% endblock %}
 {% block body %}
-<audio src="media/sys_conteudo.wav" id="sys_conteudo"></audio>
-<audio src="media/sys_referencia.wav" id="sys_referencia"></audio>
+	
+
   <div class="row">
 		<div class="col-md-4">
 			<h2><a href="#" class="btn btn-primary btn-lg  btn-block active" onmouseenter="audio_desc('sys_referencia')"role="button" aria-pressed="true" >REFERÊNCIA</a></h2>

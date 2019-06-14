@@ -12,23 +12,63 @@
 		.row{height: 100vh;}
 	</style>
     {% endblock %}
+    <script>
+		function audio_desc(element){
+		    const espeak_links = document.getElementById(element);
+		    espeak_links.play(); 
+		}
+		function getCoordinate(e) {
+		  	var x = e.clientX;
+		  	var y = e.clientY;
+		  	var wt = screen.width;
+		  	var ht = screen.height;
+		 	//var coor = "Coordinates: (" + x + "," + y+" largura "+wt+" altura "+ht+" )";
+  			//document.getElementById("demo").innerHTML = coor;
+  			if(x <= 5){
+  				const espeak_links = document.getElementById('esquerda');
+  				espeak_links.play();
+  			}
+  			if(x >= wt-5){
+  				const espeak_links = document.getElementById('direita');
+  				espeak_links.play();
+  			}
+  			if(y <= 5){
+  				const espeak_links = document.getElementById('topo');
+  				espeak_links.play();
+  			}
+  			if(y == ht-5){
+  				const espeak_links = document.getElementById('bottom');
+  				espeak_links.play();
+  			}
+		}
+</script>
 
 </head>
 
-<body>
+<body onload="audio_desc('wellcome')">
+<div  onmousemove="getCoordinate(event)">
+		
+	<audio src="media/sys_wellcome.wav" id="wellcome"></audio>
+	<audio src="media/sys_input.wav" id="input"></audio>
+	<audio src="media/sys_button.wav" id="button"></audio>
+	<audio src="media/sys_beep.wav" id="beep"></audio>
+	<audio src="media/sys_esquerda.wav" id="esquerda"></audio>
+	<audio src="media/sys_direita.wav" id="direita"></audio>
+	<audio src="media/sys_topo.wav" id="topo"></audio>
+	<audio src="media/sys_bottom.wav" id="bottom"></audio>
 	<div class="container-fluid">
 		<div class="row justify-content-center align-items-center">
 			<form class="form-inline" method="POST" action="{% url 'buscar_item' %}">
 					{% csrf_token %}
 				<div class="input-group mb-3">
-					<input class="form-control" type="search" placeholder="MAKEVISIO" name="busca" required>
-				<div class="input-group-append">
-			    <button class="btn btn-primary" type="submit">Search</button>
+					<input class="form-control" type="search" placeholder="MAKEVISIO" name="busca" required autofocus onmouseover="audio_desc('input')">
+				<div class="input-group-append" >
+			    <button class="btn btn-primary" type="submit" onmouseover="audio_desc('button')">Search</button>
 				</div>
 				</div>
 
 			</form>
-
+<!--p id="demo"></p-->
 
 		</div>
 		
@@ -39,6 +79,7 @@
 	<script src="{% static 'bootstrap/js/jquery.min.js' %}"></script>
 	<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 	<script src="{% static 'admin/js/myfunctions.js' %}"></script>	
+</div>
 </body>
 </html>
 

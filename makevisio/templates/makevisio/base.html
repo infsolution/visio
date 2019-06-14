@@ -9,15 +9,57 @@
     <link rel="stylesheet" href="{% static 'fontawesome/css/fontawesome-all.min.css' %}">
 	{% block head %}
     {% endblock %}
-
+<script>
+function audio_desc(element){
+    const espeak_links = document.getElementById(element);
+    espeak_links.play(); 
+}
+function show_content(element, text){
+	var show_item = document.getElementById(element).innerHTML=document.getElementById(text).innerHTML;
+}
+function getCoordinate(e) {
+		  	var x = e.clientX;
+		  	var y = e.clientY;
+		  	var wt = screen.width;
+		  	var ht = screen.height;
+		 	//var coor = "Coordinates: (" + x + "," + y+" largura "+wt+" altura "+ht+" )";
+  			//document.getElementById("demo").innerHTML = coor;
+  			if(x <= 5){
+  				const espeak_links = document.getElementById('esquerda');
+  				espeak_links.play();
+  			}
+  			if(x >= wt-5){
+  				const espeak_links = document.getElementById('direita');
+  				espeak_links.play();
+  			}
+  			if(y <= 5){
+  				const espeak_links = document.getElementById('topo');
+  				espeak_links.play();
+  			}
+  			if(y == ht-5){
+  				const espeak_links = document.getElementById('bottom');
+  				espeak_links.play();
+  			}
+		}
+</script>
 </head>
 
 <body style="margin-top: 3em;">
+<div  onmousemove="getCoordinate(event)">	
+	<audio src="media/sys_input.wav" id="input"></audio>
+	<audio src="media/sys_button.wav" id="button"></audio>
+	<audio src="media/sys_beep.wav" id="beep"></audio>
+	<audio src="media/sys_esquerda.wav" id="esquerda"></audio>
+	<audio src="media/sys_direita.wav" id="direita"></audio>
+	<audio src="media/sys_topo.wav" id="topo"></audio>
+	<audio src="media/sys_bottom.wav" id="bottom"></audio>
+	<audio src="media/sys_conteudo.wav" id="sys_conteudo"></audio>
+	<audio src="media/sys_referencia.wav" id="sys_referencia"></audio>
 	<div class="container-fluid">
 		<div class="row">
 			<nav class="navbar navbar-light bg-light d-flex justify-content-center">
 			  <form class="form-inline " method="GET" action="{% url 'buscar_item' %}">
-			    <input class="form-control mr-sm-2" type="search" placeholder="O que procura?" name="busca">
+			    <input class="form-control mr-sm-2" type="search" placeholder="O que procura?" name="busca" id="input">
 			    <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
 			  </form>
 			</nav>
@@ -30,5 +72,6 @@
 	<script src="{% static 'bootstrap/js/jquery.min.js' %}"></script>
 	<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 	<script src="{% static 'admin/js/myfunctions.js' %}"></script>
+</div>
 </body>
 </html>
