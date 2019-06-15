@@ -3,6 +3,7 @@ from django.core.files.storage import FileSystemStorage
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 from .synthesizer import *
+from . models import *
 import json
 import requests
 import re
@@ -10,6 +11,7 @@ class Page:
 	def __init__(self, url):
 		self.page = self.get_page(url)
 		self.dic_page = {}
+		self.list_page = []
 		self.dic_path = {}
 		self.load_data()
 
@@ -30,10 +32,15 @@ class Page:
 
 	def add_title(self):
 		if self.page.title:
-			self.add_element('título',self.page.title.string)
 			synt = Synthesizer()
-			path = synt.synthesizer(self.page.title.string)
-
+			atr = Atribut(name='titulo', name_audio=synt.synthesizer('título'), id_name='titulo_audio'
+				, description=self.page.title.string, path_audio=synt.synthesizer(self.page.title.string),
+				id_description='titulo_desc')
+			self.list_page.append(atr)
+			'''self.add_element('título',self.page.title.string)
+												synt = Synthesizer()
+												self.dic_path['titulo']=synt.synthesizer(self.page.title.string)
+									'''
 	
 	def add_h1(self):
 		if self.page.h1:
@@ -57,11 +64,11 @@ class Page:
 		if self.page.form:
 			self.add_element('formulário', self.page.form)
 	def load_data(self):
-		self.add_link()
+		#self.add_link()
 		self.add_title()
 		#self.add_h1()
-		self.add_content()
-		self.add_form()
+		#self.add_content()
+		#self.add_form()
 		
 
 

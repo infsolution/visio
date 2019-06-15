@@ -44,26 +44,48 @@ function getCoordinate(e) {
 </script>
 </head>
 
-<body style="margin-top: 3em;">
+<body 
+{% if page_desc %}
+onload="audio_desc('{{page_desc.key}}')"
+{% endif %}>
 <div  onmousemove="getCoordinate(event)">	
-	<audio src="media/sys_input.wav" id="input"></audio>
-	<audio src="media/sys_button.wav" id="button"></audio>
-	<audio src="media/sys_beep.wav" id="beep"></audio>
-	<audio src="media/sys_esquerda.wav" id="esquerda"></audio>
-	<audio src="media/sys_direita.wav" id="direita"></audio>
-	<audio src="media/sys_topo.wav" id="topo"></audio>
-	<audio src="media/sys_bottom.wav" id="bottom"></audio>
-	<audio src="media/sys_conteudo.wav" id="sys_conteudo"></audio>
-	<audio src="media/sys_referencia.wav" id="sys_referencia"></audio>
+	{% if page_desc %}
+	<audio src="media/{{page_desc.value}}.wav" id="{{page_desc.key}}"></audio>
+	{% endif %}
+	<audio src="media/sys/sys_input.wav" id="input"></audio>
+	<audio src="media/sys/sys_button.wav" id="button"></audio>
+	<audio src="media/sys/sys_beep.wav" id="beep"></audio>
+	<audio src="media/sys/sys_esquerda.wav" id="esquerda"></audio>
+	<audio src="media/sys/sys_direita.wav" id="direita"></audio>
+	<audio src="media/sys/sys_topo.wav" id="topo"></audio>
+	<audio src="media/sys/sys_bottom.wav" id="bottom"></audio>
+	<audio src="media/sys/sys_conteudo.wav" id="sys_conteudo"></audio>
+	<audio src="media/sys/sys_referencia.wav" id="sys_referencia"></audio>
+	<audio src="media/sys/sys_home.wav" id="home"></audio>
+	<audio src="media/sys/sys_logo.wav" id="logo"></audio>
+
+	{% if page %}
+		{% for atr in page %}
+			<audio src="{{ atr.path_audio }}" id="{{atr.name}}"></audio>
+			<audio src="{{ atr.name_audio }}" id="{{atr.id_name}}"></audio>
+		{% endfor %}
+
+	{% endif %}
 	<div class="container-fluid">
-		<div class="row">
-			<nav class="navbar navbar-light bg-light d-flex justify-content-center">
-			  <form class="form-inline " method="GET" action="{% url 'buscar_item' %}">
-			    <input class="form-control mr-sm-2" type="search" placeholder="O que procura?" name="busca" id="input">
-			    <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+		<nav class="navbar navbar-light bg-light">
+		  <!--a class="navbar-brand" href="{% url 'index' %}" onmouseover="audio_desc('home')">Makevisio</a-->
+		  <h1 onmouseover="audio_desc('logo')">Makevisio</h1>
+		</nav>
+		<div class="row  justify-content-center">
+			<nav class="navbar navbar-light bg-light d-flex ">
+			  <form class="form-inline" method="GET" action="{% url 'buscar_item' %}" >
+			    <input class="form-control mr-sm-2" type="search" placeholder="O que procura?" name="busca" onmouseover="audio_desc('input')" autofocus>
+			    <button class="btn btn-primary my-2 my-sm-0" type="submit" onmouseover="audio_desc('button')">Search</button>
 			  </form>
 			</nav>
 		</div>
+		<br/>
+		<!--p id="demo"></p-->
 	{% block body %}
     {% endblock %}
 

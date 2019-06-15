@@ -7,40 +7,31 @@
 
   <div class="row">
 		<div class="col-md-4">
-			<h2><a href="#" class="btn btn-primary btn-lg  btn-block active" onmouseenter="audio_desc('sys_referencia')"role="button" aria-pressed="true" >REFERÊNCIA</a></h2>
+			<h2><a href="#" class="btn btn-primary btn-lg  btn-block active" onmouseover="audio_desc('sys_referencia')"role="button" aria-pressed="true" >REFERÊNCIA</a></h2>
+
+			<a href="{% url 'index' %}" class="btn btn-primary btn-lg  btn-block active" onmouseover="audio_desc('home')">Pagina inicial</a>
+
 			{% if error %}
 			<span>{{error}}</span>
 			{% endif %}
-			{% for key in page %}
-				<span onmouseenter="audio_desc('content-resume')" onclick="show_content('show','{{key}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">{{key|title}}</span>
+			{% for atr in page %}
+				<span onmouseover="audio_desc('{{atr.id_name}}')" onclick="show_content('show','{{atr.id_description}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">{{atr.name|title}}</span>
 			{% endfor %}	
 				<!--span onmouseenter="audio_desc('content-resume')" onclick="show_content('show','links')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">Links</span-->
         <!--span onmouseenter="audio_desc('content-resume')" onclick="show_content('show','{{page.h1}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">Título página</span-->  
     </div>
 		<div class="col-md-8">
-			<h2><a href="#" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true" onmouseenter="audio_desc('sys_conteudo')">CONTEÚDO</a></h2>
-			<span id="show">
+			<h2><a href="#" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true" onmouseover="audio_desc('sys_conteudo')">CONTEÚDO</a></h2>
+			<span id="show" onmouseover="audio_desc('{{atr.id_name}}')">
 				<h1>CLIQUE EM UM LINK</h1>
 			</span>
-			{% for key, values in page.items %}
-			<span id="{{key}}" style="display: none">
-				{% if values.0 %}
-				<p>{{ values }}</p>
-				{% elif key == 'conteúdo' %}
-					{% for v in values.items %}
-					{% if v.1 %}
-					<p>{{v.1}}</p>
-					{% endif %}
-					{% endfor %}
-				{% else %}
-				{% for keylink, valueslink in values.items %}
-				<a href="{{ valueslink}}" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">{{keylink}}</a>
-				{% endfor %}
-				{% endif %}
-			</span>
+			{% for atr in page %}
+				<span  id="{{atr.id_description}}" style="display: none" >
+				<p onmouseover="audio_desc('{{atr.name}}')">{{atr.description}}</p>
+				</span>
+			
 			{% endfor %}
    
-
 		</div>			
 	</div>
 {% endblock body %}
