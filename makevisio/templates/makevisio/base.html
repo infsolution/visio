@@ -70,6 +70,13 @@ onload="audio_desc('{{page_desc.key}}')"
 			<audio src="{{ atr.path_audio }}" id="{{atr.name}}"></audio>
 			<audio src="{{ atr.name_audio }}" id="{{atr.id_name}}"></audio>
 		{% endfor %}
+	{% endif %}
+	{% if values %}
+		{% for atrlink in values %}
+			<audio src="{{ atrlink.displayLink_audio }}" id="{{atrlink.displayLink_id}}"></audio>
+			<audio src="{{ atrlink.title_audio }}" id="{{atrlink.title_id}}"></audio>
+			<audio src="{{ atrlink.snippet_audio }}" id="{{atrlink.snippet_id}}"></audio>
+		{% endfor %}
 
 	{% endif %}
 	<div class="container-fluid">

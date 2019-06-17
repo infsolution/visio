@@ -1,20 +1,14 @@
 {% extends 'makevisio/base.html' %}
 {% block head %}
-<script>
+<!--script>
 function show_content(element, text){
 	var show_item = document.getElementById(element).innerHTML=document.getElementById(text).innerHTML;
 }
-</script>
+</script-->
 {% endblock %}
 
 {% block body %}
-	<!--{% if page %}
-		{% for atr in page %}
-			<audio src="{{ atr.path_audio }}" id="{{atr.name}}"></audio>
-			<audio src="{{ atr.name_audio }}" id="{{atr.id_name}}"></audio>
-		{% endfor %}
-
-	{% endif %}-->
+	
 	<div class="row">
 		<div class="col-md-4">
 			<h2><a href="#" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true" onmouseover="audio_desc('sys_referencia')">REFERÊNCIA</a></h2>
@@ -23,7 +17,7 @@ function show_content(element, text){
 			<span>{{error}}</span>
 			{% endif %}
 			{% for link in values %}
-				<span onmouseenter="audio_desc('content-resume')" onclick="show_content('show','{{link.title}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">{{link.displayLink}}</span>
+				<span onmouseover="audio_desc('{{link.displayLink_id}}')" onclick="show_content('show','{{link.title_id}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">{{link.displayLink}}</span>
 			{% endfor %}
 		</div>
 		<div class="col-md-8">
@@ -32,11 +26,11 @@ function show_content(element, text){
 				<h1>CLIQUE EM UM LINK</h1>
 			</span>
 			{% for item in values %}
-			<span id="{{item.title}}" style="display: none">
+			<span id="{{item.title_id}}" style="display: none">
 				<p>{{ item.title }}</p>
 				<p>{{item.snippet}}</p>
-				<p>{{item.link}}</p>
-				<p>{{item.displayLink}}</p>
+				<!--p>{{item.link}}</p>
+				<p>{{item.displayLink}}</p-->
 				<!--p><a href="{{item.link}}">Visitar</a></p-->
 				<form method="POST" action="{% url 'link' %}">
 					{% csrf_token %}
