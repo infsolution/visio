@@ -2,6 +2,7 @@
 from django.shortcuts import render, redirect
 import requests
 from .page import Page
+from . import synthesizer
 import json
 def index(request):
 	return render(request, 'makevisio/index.html')
@@ -35,3 +36,16 @@ def get_page_(request):
 	if request.POST.get('link'):
 		page = Page(request.POST.get('link'))
 		return render(request,'makevisio/page.html',{'page':page.list_page,})
+
+
+def create_audio_desc(response_json):
+	list_search=[]
+	synt = Synthesizer()
+	for link in response_json:
+		link_atr = LinkAtribut(link=link.link, displayLink=link.displayLink, 
+			displayLink_audio=synt.synthesizer(link.displayLink), displayLink_id=create_id(link.displayLink),
+			title=link.title, title_audio=synt.synthesizer(link.title), title_id=create_id(link.title),
+			snippet=lik.snippet, snippet_audio=synt.synthesizer(link.snippet), snippet_id=create_id(link.snippet))
+
+def create_id(value):
+	return 'oi'

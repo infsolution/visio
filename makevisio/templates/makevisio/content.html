@@ -8,9 +8,17 @@ function show_content(element, text){
 {% endblock %}
 
 {% block body %}
+	<!--{% if page %}
+		{% for atr in page %}
+			<audio src="{{ atr.path_audio }}" id="{{atr.name}}"></audio>
+			<audio src="{{ atr.name_audio }}" id="{{atr.id_name}}"></audio>
+		{% endfor %}
+
+	{% endif %}-->
 	<div class="row">
 		<div class="col-md-4">
-			<h2><a href="#" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">REFERÊNCIA</a></h2>
+			<h2><a href="#" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true" onmouseover="audio_desc('sys_referencia')">REFERÊNCIA</a></h2>
+			<a href="{% url 'index' %}" class="btn btn-primary btn-lg  btn-block active" onmouseover="audio_desc('home')">Pagina inicial</a>
 			{% if error %}
 			<span>{{error}}</span>
 			{% endif %}
@@ -19,7 +27,7 @@ function show_content(element, text){
 			{% endfor %}
 		</div>
 		<div class="col-md-8">
-			<h2><a href="#" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">CONTEÚDO</a></h2>
+			<h2><a href="#" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true" onmouseover="audio_desc('sys_conteudo')">CONTEÚDO</a></h2>
 			<span id="show">
 				<h1>CLIQUE EM UM LINK</h1>
 			</span>
@@ -28,11 +36,12 @@ function show_content(element, text){
 				<p>{{ item.title }}</p>
 				<p>{{item.snippet}}</p>
 				<p>{{item.link}}</p>
+				<p>{{item.displayLink}}</p>
 				<!--p><a href="{{item.link}}">Visitar</a></p-->
 				<form method="POST" action="{% url 'link' %}">
 					{% csrf_token %}
 					<input type="hidden" name="link" value="{{item.link}}">
-					<input class="btn btn-primary btn-lg  btn-block active" type="submit" value="Visitar">
+					<input class="btn btn-primary btn-lg  btn-block active" type="submit" value="Visitar" onmouseover="audio_desc('visitar')">
 				</form>
 			</span>
 			{% endfor %}
