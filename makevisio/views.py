@@ -24,7 +24,7 @@ def search_google(request):
 			except Exception as e:
 				print("Error: "+e)
 				return render(request,'makevisio/content.html',{"error":e})
-			return render(request,'makevisio/content.html',{'values':create_audio_desc(response.json()['items'])})
+			return render(request,'makevisio/content.html',{'values':create_audio_desc(response.json()['items']),})
 	else:
 		return render(request,'makevisio/content.html',{"error":"Sem resposta."})
 
@@ -42,7 +42,7 @@ def get_page_(request):
 
 
 def create_audio_desc(response_json):
-	print(response_json)
+	#print(response_json)
 	list_search=[]
 	synt = Synthesizer()
 	for link in response_json:
