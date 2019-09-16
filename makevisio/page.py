@@ -33,25 +33,29 @@ class Page:
 	def add_title(self):
 		if self.page.title:
 			synt = Synthesizer()
-			atr = Atribut(name='titulo', name_audio=synt.synthesizer('título'), id_name='titulo_audio'
-				, description=self.page.title.string, path_audio=synt.synthesizer(self.page.title.string),
-				id_description='titulo_desc')
+			atr = Atribut(name='titulo', name_audio=synt.synthesizer('título'), id_name='titulo_audio')
+			atr.save()
+			item = Item(description=self.page.title.string, path_audio=synt.synthesizer(self.page.title.string),
+				id_description='titulo_desc', atributo=atr)
+			item.save()
 			self.list_page.append(atr)
-			'''self.add_element('título',self.page.title.string)
-												synt = Synthesizer()
-												self.dic_path['titulo']=synt.synthesizer(self.page.title.string)
-									'''
-	
-	def add_h1(self):
-		if self.page.h1:
-			self.add_element('título da página', self.page.h1.string)	
+			self.add_element('título',self.page.title.string)
+			#synt = Synthesizer()
+			#self.dic_path['titulo']=synt.synthesizer(self.page.title.string)
+
+	'''def add_h1(self):
+					if self.page.h1:
+						self.add_element('título da página', self.page.h1.string)'''
 	def add_content(self):
 		p_dic={}
 		if self.page.body.div:
 			content=self.page.body.findAll('p')
 			for p in range(len(content)):
-				p_dic[p]=content[p].string
+				if content[p].string != None and len(content[p].string) > 10:
+					p_dic[p]=content[p].string
 			self.add_element('conteúdo', p_dic)
+		print(p_dic)
+
 	def add_link(self):
 		link_dic={}
 		if self.page.findAll('a'):
@@ -59,17 +63,14 @@ class Page:
 			for link in links:
 				link_dic[link.string]=link['href']
 			self.add_element('links', link_dic)
-	
+
 	def add_form(self):
 		if self.page.form:
 			self.add_element('formulário', self.page.form)
+
 	def load_data(self):
-		#self.add_link()
+		self.add_link()
 		self.add_title()
 		#self.add_h1()
-		#self.add_content()
+		self.add_content()
 		#self.add_form()
-		
-
-
-

@@ -15,8 +15,12 @@
 			<span>{{error}}</span>
 			{% endif %}
 			{% for atr in page %}
-				<span onmouseover="audio_desc('{{atr.id_name}}')" onclick="show_content('show','{{atr.id_description}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">{{atr.name|title}}</span>
-			{% endfor %}	
+			{% with items=atr.items.count %}
+			{% if items == 1 %}
+				<span onmouseover="audio_desc('{{atr.id_name}}')" onclick="show_content('show','{{atr.items.0.id_description}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">{{atr.name|title}}</span>
+			{% endif %}
+			{% endwith %}
+			{% endfor %}
 				<!--span onmouseenter="audio_desc('content-resume')" onclick="show_content('show','links')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">Links</span-->
         <!--span onmouseenter="audio_desc('content-resume')" onclick="show_content('show','{{page.h1}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">Título página</span-->  
     </div>
@@ -26,8 +30,8 @@
 				<h1>CLIQUE EM UM LINK</h1>
 			</span>
 			{% for atr in page %}
-				<span  id="{{atr.id_description}}" style="display: none" >
-				<p onmouseover="audio_desc('{{atr.name}}')">{{atr.description}}</p>
+				<span  id="{{atr.items.0.id_description}}" style="display: none" >
+				<p onmouseover="audio_desc('{{atr.name}}')">{{atr.items.0.description}}</p>
 				</span>
 			
 			{% endfor %}
