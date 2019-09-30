@@ -67,7 +67,7 @@ onload="audio_desc('{{page_desc.key}}')"
 
 	{% if page %}
 		{% for atr in page %}
-			<audio src="{{ atr.path_audio }}" id="{{atr.name}}"></audio>
+			<audio src="{{ atr.items.all.0.path_audio }}" id="{{atr.items.all.0.path_audio}}"></audio>
 			<audio src="{{ atr.name_audio }}" id="{{atr.id_name}}"></audio>
 		{% endfor %}
 	{% endif %}

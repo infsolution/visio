@@ -21,10 +21,11 @@ class Page:
 	def get_page(self, url):
 		try:
 			r = requests.get(url)
+			r.encoding = r.apparent_encoding
 		except Exception as e:
 			print(e)
 			return e
-		page = BeautifulSoup(r.text.encode('utf-8').decode('utf-8', ''), 'html.parser')
+		page = BeautifulSoup(r.text)
 		return page
 
 	def add_element(self, key, value):
@@ -39,26 +40,38 @@ class Page:
 				id_description='titulo_desc', atributo=atr)
 			item.save()
 			self.list_page.append(atr)
-			self.add_element('título',self.page.title.string)
+			#self.add_element('título',self.page.title.string)
 			#synt = Synthesizer()
 			#self.dic_path['titulo']=synt.synthesizer(self.page.title.string)
 
 	'''def add_h1(self):
 					if self.page.h1:
 						self.add_element('título da página', self.page.h1.string)'''
+	def add_item(self, items):
+		string = ''
+		for item in items:
+			string += item + '\n'
+		return string
+
 	def add_content(self):
-		p_dic={}
-		if self.page.body.div:
+		p_dic=[]
+		if self.page.body.div.p or self.page.body.p:
 			content=self.page.body.findAll('p')
 			for p in range(len(content)):
 				if content[p].string != None and len(content[p].string) > 10:
-					p_dic[p]=content[p].string
-			self.add_element('conteúdo', p_dic)
-		print(p_dic)
+					p_dic.append(content[p].string)
+			word = self.add_item(p_dic)
+			synt = Synthesizer()
+			atr = Atribut(name='conteúdo', name_audio=synt.synthesizer('conteúdo'), id_name='conteudo_audio')
+			atr.save()
+			item = Item(description=word, path_audio=synt.synthesizer(word),
+				id_description='conteudo_desc', atributo=atr)
+			item.save()
+			self.list_page.append(atr)
 
 	def add_link(self):
 		link_dic={}
-		if self.page.findAll('a'):
+		if self.page.body.findAll('a'):
 			links = self.page.body.findAll('a',{"href":re.compile("http?://(.*?)")})
 			for link in links:
 				link_dic[link.string]=link['href']

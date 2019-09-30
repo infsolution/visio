@@ -16,8 +16,8 @@
 			{% endif %}
 			{% for atr in page %}
 			{% with items=atr.items.count %}
-			{% if items == 1 %}
-				<span onmouseover="audio_desc('{{atr.id_name}}')" onclick="show_content('show','{{atr.items.0.id_description}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">{{atr.name|title}}</span>
+			{% if items >= 1 %}
+				<span onmouseover="audio_desc('{{atr.id_name}}')" onclick="show_content('show','{{atr.items.all.0.id_description}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">{{atr.name|title}}</span>
 			{% endif %}
 			{% endwith %}
 			{% endfor %}
@@ -30,8 +30,8 @@
 				<h1>CLIQUE EM UM LINK</h1>
 			</span>
 			{% for atr in page %}
-				<span  id="{{atr.items.0.id_description}}" style="display: none" >
-				<p onmouseover="audio_desc('{{atr.name}}')">{{atr.items.0.description}}</p>
+				<span  id="{{atr.items.all.0.id_description}}" style="display: none" >
+				<p onmouseover="audio_desc('{{atr.items.all.0.path_audio}}')">{{atr.items.all.0.description}}</p>
 				</span>
 			
 			{% endfor %}
