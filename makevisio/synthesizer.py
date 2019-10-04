@@ -5,7 +5,8 @@ class Synthesizer:
 	def synthesizer(self, arg):
 		inicio = "espeak -vpt -k 20 '"
 		comand = "' -w "
-		path = "/home/cicero/Documentos/IFPI/TCC/visio/media/"
+		path = "/var/www/html/visio/media/"
+		#path = "/home/cicero/Documentos/IFPI/TCC/visio/media/"
 		name = self.replace_all(arg[0:15])
 		print(name)
 		exte =".wav"
