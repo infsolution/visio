@@ -131,7 +131,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': 'media/log/debug.log',
+            'filename': 'visio/media/log/debug.log',
         },
     },
     'loggers': {
