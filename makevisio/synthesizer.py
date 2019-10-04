@@ -3,7 +3,7 @@ import os
 class Synthesizer:			
 
 	def synthesizer(self, arg):
-		inicio = "sudo espeak -vpt -k 20 '"
+		inicio = "espeak -vpt -k 20 '"
 		comand = "' -w "
 		path = "/var/www/html/visio/media/"
 		#path = "/home/cicero/Documentos/IFPI/TCC/visio/media/"
