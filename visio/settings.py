@@ -131,7 +131,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': 'visio/media/log/debug.log',
+            'filename': 'html/visio/media/log/debug.log',
         },
     },
     'loggers': {
@@ -166,3 +166,6 @@ STATIC_ROOT = os.path.join(BASE_DIR,'static/')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+
+#ver log do apache: sudo tail /var/log/apache2/error.log
