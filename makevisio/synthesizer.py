@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import os
-
 class Synthesizer:			
 
 	def synthesizer(self, arg):
@@ -10,8 +9,8 @@ class Synthesizer:
 		name = self.replace_all(arg[0:15])
 		print(name)
 		exte =".wav"
-		os.system(inicio+arg+comand+path+name+exte)
-		print(name+exte)
+		#os.system(inicio+arg+comand+path+name+exte)
+		os.system(u' '.join((inicio,arg,comand,path,name,exte)).encode('utf-8'))
 		return "media/"+name+exte
 		
 
