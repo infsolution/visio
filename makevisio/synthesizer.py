@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+
 class Synthesizer:			
 
 	def synthesizer(self, arg):

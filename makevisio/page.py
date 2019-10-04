@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from django.core.files.storage import FileSystemStorage
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
