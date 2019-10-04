@@ -70,13 +70,19 @@ class Page:
 			self.list_page.append(atr)
 
 	def add_link(self):
-		link_dic={}
 		if self.page.body.findAll('a'):
+			link_dic={}
+			synt = Synthesizer()
 			links = self.page.body.findAll('a',{"href":re.compile("http?://(.*?)")})
+			atr = Atribut(name='links', name_audio=synt.synthesizer('links'), id_name='links_audio')
+			atr.save()
 			for link in links:
-				link_dic[link.string]=link['href']
-			self.add_element('links', link_dic)
-
+				if link.string:
+					item = Item(description=link.string, path_audio=synt.synthesizer(link.string), id_description=link.string, atributo=atr)
+					item.save()
+				#link_dic[link.string]=link['href']
+			#self.add_element('links', link_dic)
+			self.list_page.append(atr)
 	def add_form(self):
 		if self.page.form:
 			self.add_element('formulário', self.page.form)

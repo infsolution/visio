@@ -9,7 +9,7 @@ class Atribut(models.Model):
 	id_name = models.CharField(max_length=255, null=False)
 
 class Item(models.Model):
-	description = models.CharField(max_length=255, null=False)
+	description = models.TextField()
 	path_audio = models.CharField(max_length=2048, null=False)
 	id_description = models.CharField(max_length=255, null=False)
 	atributo = models.ForeignKey(Atribut, on_delete=models.CASCADE, related_name='items')
