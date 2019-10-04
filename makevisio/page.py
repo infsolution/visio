@@ -25,7 +25,7 @@ class Page:
 		except Exception as e:
 			print(e)
 			return e
-		page = BeautifulSoup(r.text)
+		page = BeautifulSoup(r.text, features="html.parser")
 		return page
 
 	def add_element(self, key, value):
