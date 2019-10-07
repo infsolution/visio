@@ -70,7 +70,7 @@ class Page:
 			self.list_page.append(atr)
 
 	def add_link(self):
-		if self.page.body.findAll('a'):
+		if self.page.body.a or self.page.body.div.a:
 			link_dic={}
 			synt = Synthesizer()
 			links = self.page.body.findAll('a',{"href":re.compile("http?://(.*?)")})

@@ -14,6 +14,12 @@ function audio_desc(element){
     const espeak_links = document.getElementById(element);
     espeak_links.play(); 
 }
+function audio_desc_list(object){
+	object.forEach(function (value,index, array) {
+		value.play()
+	});
+}
+
 function show_content(element, text){
 	var show_item = document.getElementById(element).innerHTML=document.getElementById(text).innerHTML;
 }

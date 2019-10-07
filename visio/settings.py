@@ -124,14 +124,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LOGGING = {
+'''LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'handlers': {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': 'html/visio/media/log/debug.log',
+            'filename': 'media/log/debug.log',#html/visio/
         },
     },
     'loggers': {
@@ -141,7 +141,7 @@ LOGGING = {
             'propagate': True,
         },
     },
-}
+}'''
 
 
 # Internationalization
