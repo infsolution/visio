@@ -13,7 +13,8 @@ class Page:
 		self.dic_page = {}
 		self.list_page = []
 		self.dic_path = {}
-		self.load_data()
+		if self.page:
+			self.load_data()
 
 	def __str__(self):
 		return self.page.title.string
@@ -21,10 +22,9 @@ class Page:
 	def get_page(self, url):
 		try:
 			r = requests.get(url)
-			r.encoding = r.apparent_encoding
+			r.encoding = r.apparent_encoding#new encoding
 		except Exception as e:
-			print(e)
-			return e
+			return None
 		page = BeautifulSoup(r.text, features="html.parser")
 		return page
 
@@ -62,7 +62,7 @@ class Page:
 					p_dic.append(content[p].string)
 			word = self.add_item(p_dic)
 			synt = Synthesizer()
-			atr = Atribut(name='conteúdo', name_audio=synt.synthesizer('conteúdo'), id_name='conteudo_audio')
+			atr = Atribut(name='conteudo', name_audio=synt.synthesizer('conteúdo'), id_name='conteudo_audio')
 			atr.save()
 			item = Item(description=word, path_audio=synt.synthesizer(word),
 				id_description='conteudo_desc', atributo=atr)

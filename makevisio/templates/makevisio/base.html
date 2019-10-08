@@ -10,6 +10,17 @@
 	{% block head %}
     {% endblock %}
 <script>
+	var content_audio = [
+	{% if page %}
+		{% for atr in page %}
+			{% if  atr.name == 'conteudo' %}
+				{% for item in atr.items.all %}
+					{ audio_path: "{{ item.path_audio }}"},
+				{% endfor %}
+			{% endif %}
+		{% endfor %}
+	{% endif %}
+]
 function audio_desc(element){
     const espeak_links = document.getElementById(element);
     espeak_links.play(); 

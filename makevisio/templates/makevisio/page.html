@@ -3,7 +3,6 @@
 
 {% endblock %}
 {% block body %}
-	
 
   <div class="row">
 		<div class="col-md-4">
@@ -17,12 +16,12 @@
 			{% for atr in page %}
 			{% with items=atr.items.count %}
 			{% if items >= 1 %}
-				<span onmouseover="audio_desc('{{atr.id_name}}')" onclick="show_content('show','{{atr.items.all.0.id_description}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">{{atr.name|title}}</span>
+				<span onmouseover="audio_desc('{{atr.id_name}}')" onclick="show_content('show','{{atr.items.all.0.id_description}}')" onmouseup="audio_desc_list('content_audio')"class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">{{atr.name|title}}</span>
 			{% endif %}
 			{% endwith %}
 			{% endfor %}
 				<!--span onmouseenter="audio_desc('content-resume')" onclick="show_content('show','links')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">Links</span-->
-        <!--span onmouseenter="audio_desc('content-resume')" onclick="show_content('show','{{page.h1}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">Título página</span-->  
+        <!--span onmouseenter="audio_desc('content-resume')" onclick="show_content('show','{{page.h1}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">Título página</span-->
     </div>
 		<div class="col-md-8">
 			<h2><a href="#" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true" onmouseover="audio_desc('sys_conteudo')">CONTEÚDO</a></h2>
@@ -37,7 +36,6 @@
 				<p onmouseover="audio_desc('{{item.path_audio}}')">{{item.description}}</p>
 				</span>
 				{% endfor %}
-				
 			{%  else%}
 				<span  id="{{atr.items.all.0.id_description}}" style="display: none" >
 				<p onmouseover="audio_desc('{{atr.items.all.0.path_audio}}')">{{atr.items.all.0.description}}</p>
@@ -45,7 +43,6 @@
 			{% endif %}
 			{% endwith %}
 			{% endfor %}
-   
-		</div>			
+		</div>
 	</div>
 {% endblock body %}
