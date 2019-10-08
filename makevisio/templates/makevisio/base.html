@@ -10,17 +10,6 @@
 	{% block head %}
     {% endblock %}
 <script>
-	var content_audio = [
-	{% if page %}
-		{% for atr in page %}
-			{% if  atr.name == 'conteudo' %}
-				{% for item in atr.items.all %}
-					{ audio_path: "{{ item.path_audio }}"},
-				{% endfor %}
-			{% endif %}
-		{% endfor %}
-	{% endif %}
-]
 function audio_desc(element){
     const espeak_links = document.getElementById(element);
     espeak_links.play(); 
@@ -33,6 +22,13 @@ function audio_desc_list(object){
 
 function show_content(element, text){
 	var show_item = document.getElementById(element).innerHTML=document.getElementById(text).innerHTML;
+}
+function show_by_class(class_name){
+	var items = document.getElementsByClassName(class_name)
+	for(var i = 0; i<= items.length;i++){
+		items[i].style.display = 'block'
+	}
+
 }
 function getCoordinate(e) {
 		  	var x = e.clientX;

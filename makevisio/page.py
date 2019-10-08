@@ -54,19 +54,21 @@ class Page:
 		return string
 
 	def add_content(self):
-		p_dic=[]
+		p_list=[]
 		if self.page.body.div.p or self.page.body.p:
 			content=self.page.body.findAll('p')
 			for p in range(len(content)):
 				if content[p].string != None and len(content[p].string) > 10:
-					p_dic.append(content[p].string)
-			word = self.add_item(p_dic)
+					p_list.append(content[p].string)
+			word = self.add_item(p_list)
 			synt = Synthesizer()
 			atr = Atribut(name='conteudo', name_audio=synt.synthesizer('conteúdo'), id_name='conteudo_audio')
 			atr.save()
-			item = Item(description=word, path_audio=synt.synthesizer(word),
-				id_description='conteudo_desc', atributo=atr)
-			item.save()
+			
+			for it in p_list:
+				item = Item(description=it, path_audio=synt.synthesizer(it),
+				id_description=it[1:11]+'_desc', atributo=atr)
+				item.save()
 			self.list_page.append(atr)
 
 	def add_link(self):
