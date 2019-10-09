@@ -17,7 +17,7 @@
 			{% with items=atr.items.count %}
 			{% if items >= 1 %}
 				<!--show','{{atr.items.all.0.id_description}}-->
-				<span onmouseover="audio_desc('{{atr.id_name}}')" onclick="show_by_class('{{atr.items.all.0.id_description}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">{{atr.name|title}}</span>
+				<span onmouseover="audio_desc('{{atr.id_name}}')" onclick="show_content('show','{{atr.items.all.0.id_description}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">{{atr.name|title}}</span>
 			{% endif %}
 			{% endwith %}
 			{% endfor %}

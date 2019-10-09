@@ -64,18 +64,21 @@ class Page:
 			synt = Synthesizer()
 			atr = Atribut(name='conteudo', name_audio=synt.synthesizer('conteúdo'), id_name='conteudo_audio')
 			atr.save()
-			
-			for it in p_list:
-				item = Item(description=it, path_audio=synt.synthesizer(it),
-				id_description=it[1:11]+'_desc', atributo=atr)
-				item.save()
+			item = Item(description=word, path_audio=synt.synthesizer(word),
+				id_description=self.replace_all(word), atributo=atr)
+			item.save()
+			'''for it in p_list:
+					item = Item(description=it, path_audio=synt.synthesizer(it),
+					id_description=it[1:11]+'_desc', atributo=atr)
+					item.save()'''
 			self.list_page.append(atr)
 
 	def add_link(self):
-		if self.page.body.a or self.page.body.div.a:
+		links = self.page.body.find_all('a',href=True)
+		if links:
+			print(links)
 			link_dic={}
 			synt = Synthesizer()
-			links = self.page.body.findAll('a',{"href":re.compile("http?://(.*?)")})
 			atr = Atribut(name='links', name_audio=synt.synthesizer('links'), id_name='links_audio')
 			atr.save()
 			for link in links:
@@ -85,6 +88,10 @@ class Page:
 				#link_dic[link.string]=link['href']
 			#self.add_element('links', link_dic)
 			self.list_page.append(atr)
+	def show_links(self, links):
+		pass
+
+
 	def add_form(self):
 		if self.page.form:
 			self.add_element('formulário', self.page.form)
@@ -95,3 +102,9 @@ class Page:
 		#self.add_h1()
 		self.add_content()
 		#self.add_form()
+
+	def replace_all(self, word):
+		for w in [" ","/","|","'","_","-","%","*","&","#","@","(",")","+","=","!","?",",",".",":",";","ã","Â","Ã","ã","ú","Ú","ó","Ó"]:
+			word = word.replace(w, "")
+
+		return word[2:10]+'_desc'

@@ -14,22 +14,22 @@ function audio_desc(element){
     const espeak_links = document.getElementById(element);
     espeak_links.play(); 
 }
-function audio_desc_list(object){
+/*function audio_desc_list(object){
 	object.forEach(function (value,index, array) {
 		value.play()
 	});
-}
+}*/
 
 function show_content(element, text){
 	var show_item = document.getElementById(element).innerHTML=document.getElementById(text).innerHTML;
 }
-function show_by_class(class_name){
+/*function show_by_class(class_name){
 	var items = document.getElementsByClassName(class_name)
 	for(var i = 0; i<= items.length;i++){
 		items[i].style.display = 'block'
 	}
 
-}
+}*/
 function getCoordinate(e) {
 		  	var x = e.clientX;
 		  	var y = e.clientY;
@@ -61,7 +61,7 @@ function getCoordinate(e) {
 {% if page_desc %}
 onload="audio_desc('{{page_desc.key}}')"
 {% endif %}>
-<div  onmousemove="getCoordinate(event)">	
+<div  onmousemove="getCoordinate(event)">
 	{% if page_desc %}
 	<audio src="media/{{page_desc.value}}.wav" id="{{page_desc.key}}"></audio>
 	{% endif %}
