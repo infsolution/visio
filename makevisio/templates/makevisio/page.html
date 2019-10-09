@@ -33,12 +33,12 @@
 			{% with items=atr.items.count %}
 			{% if items >= 1 %}
 				{% for item in atr.items.all %}
-					<div  id="{{item.id_description}}" class="{{atr.items.all.0.id_description}}" style="display: none" >
+					<div  id="{{item.id_description}}" style="display: none" >
 						<p onmouseover="audio_desc('{{item.path_audio}}')">{{item.description}}</p>
 					</div>
 				{% endfor %}
 			{%  else%}
-				<span  id="{{atr.items.all.0.id_description}}" class="{{atr.items.all.0.id_description}}"style="display: none" >
+				<span  id="{{atr.items.all.0.id_description}}" style="display: none" >
 				<p onmouseover="audio_desc('{{atr.items.all.0.path_audio}}')">{{atr.items.all.0.description}}</p>
 				</span>
 			{% endif %}

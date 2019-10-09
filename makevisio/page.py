@@ -50,16 +50,33 @@ class Page:
 	def add_item(self, items):
 		string = ''
 		for item in items:
-			string += item + '\n'
+			string += item
 		return string
 
 	def add_content(self):
 		p_list=[]
-		if self.page.body.div.p or self.page.body.p:
-			content=self.page.body.findAll('p')
-			for p in range(len(content)):
-				if content[p].string != None and len(content[p].string) > 10:
-					p_list.append(content[p].string)
+		content = self.page.body.find_all("p")
+		content_alt = self.page.find_all("p")
+		if content:
+			for p in content:
+				if p.get_text() != None and len(p.get_text()) > 60:
+					p_list.append(p.get_text())
+			word = self.add_item(p_list)
+			synt = Synthesizer()
+			atr = Atribut(name='conteudo', name_audio=synt.synthesizer('conteúdo'), id_name='conteudo_audio')
+			atr.save()
+			item = Item(description=word, path_audio=synt.synthesizer(word),
+				id_description=self.replace_all(word), atributo=atr)
+			item.save()
+			'''for it in p_list:
+					item = Item(description=it, path_audio=synt.synthesizer(it),
+					id_description=it[1:11]+'_desc', atributo=atr)
+					item.save()'''
+			self.list_page.append(atr)
+		else:
+			for p in content_alt:
+				if p.get_text() != None and len(p.get_text()) > 60:
+					p_list.append(p.get_text())
 			word = self.add_item(p_list)
 			synt = Synthesizer()
 			atr = Atribut(name='conteudo', name_audio=synt.synthesizer('conteúdo'), id_name='conteudo_audio')
@@ -74,16 +91,18 @@ class Page:
 			self.list_page.append(atr)
 
 	def add_link(self):
-		links = self.page.body.find_all('a',href=True)
+		links = self.page.body.find_all("a",href=True)
 		if links:
-			print(links)
 			link_dic={}
 			synt = Synthesizer()
 			atr = Atribut(name='links', name_audio=synt.synthesizer('links'), id_name='links_audio')
 			atr.save()
 			for link in links:
-				if link.string:
-					item = Item(description=link.string, path_audio=synt.synthesizer(link.string), id_description=link.string, atributo=atr)
+				#print(link.get_text())
+				#print(link.get("href"))
+				if link.get_text():
+					item = Item(description=link.get_text(), path_audio=synt.synthesizer(link.get_text()), id_description=self.replace_all(link.get_text()),
+					opt_link=link.get("href"), atributo=atr)
 					item.save()
 				#link_dic[link.string]=link['href']
 			#self.add_element('links', link_dic)
@@ -97,7 +116,7 @@ class Page:
 			self.add_element('formulário', self.page.form)
 
 	def load_data(self):
-		self.add_link()
+		#self.add_link()
 		self.add_title()
 		#self.add_h1()
 		self.add_content()
@@ -106,5 +125,4 @@ class Page:
 	def replace_all(self, word):
 		for w in [" ","/","|","'","_","-","%","*","&","#","@","(",")","+","=","!","?",",",".",":",";","ã","Â","Ã","ã","ú","Ú","ó","Ó"]:
 			word = word.replace(w, "")
-
 		return word[2:10]+'_desc'
