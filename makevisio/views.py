@@ -32,7 +32,7 @@ def search_google(request):
 
 def get_page(request,url):
 	page = Page(url)
-	return render(request,'makevisio/page.html',{'page':page.list_page,})
+	return render(request,'makevisio/page.html',{'page':page.list_page,'page_links':page.list_links,})
 
 def get_page_link(request):
 	if request.POST.get('link'):

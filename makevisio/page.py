@@ -12,6 +12,7 @@ class Page:
 		self.page = self.get_page(url)
 		self.dic_page = {}
 		self.list_page = []
+		self.list_links = []
 		self.dic_path = {}
 		if self.page:
 			self.load_data()
@@ -68,10 +69,6 @@ class Page:
 			item = Item(description=word, path_audio=synt.synthesizer(word),
 				id_description=self.replace_all(word), atributo=atr)
 			item.save()
-			'''for it in p_list:
-					item = Item(description=it, path_audio=synt.synthesizer(it),
-					id_description=it[1:11]+'_desc', atributo=atr)
-					item.save()'''
 			self.list_page.append(atr)
 		else:
 			for p in content_alt:
@@ -84,39 +81,28 @@ class Page:
 			item = Item(description=word, path_audio=synt.synthesizer(word),
 				id_description=self.replace_all(word), atributo=atr)
 			item.save()
-			'''for it in p_list:
-					item = Item(description=it, path_audio=synt.synthesizer(it),
-					id_description=it[1:11]+'_desc', atributo=atr)
-					item.save()'''
 			self.list_page.append(atr)
 
 	def add_link(self):
 		links = self.page.body.find_all("a",href=True)
 		if links:
-			link_dic={}
 			synt = Synthesizer()
-			atr = Atribut(name='links', name_audio=synt.synthesizer('links'), id_name='links_audio')
-			atr.save()
 			for link in links:
-				#print(link.get_text())
-				#print(link.get("href"))
 				if link.get_text():
-					item = Item(description=link.get_text(), path_audio=synt.synthesizer(link.get_text()), id_description=self.replace_all(link.get_text()),
+					atr = Atribut(name=link.get_text(), name_audio=synt.synthesizer(link.get_text()), id_name=self.replace_all(link.get_text()))
+					atr.save()
+					item = Item(description=link.get("href"), path_audio=synt.synthesizer(link.get("href")), id_description=self.replace_all(link.get("href")),
 					opt_link=link.get("href"), atributo=atr)
 					item.save()
-				#link_dic[link.string]=link['href']
-			#self.add_element('links', link_dic)
-			self.list_page.append(atr)
-	def show_links(self, links):
-		pass
-
+					self.list_links.append(atr)
+			print(len(self.list_links))
 
 	def add_form(self):
 		if self.page.form:
 			self.add_element('formulário', self.page.form)
 
 	def load_data(self):
-		#self.add_link()
+		self.add_link()
 		self.add_title()
 		#self.add_h1()
 		self.add_content()

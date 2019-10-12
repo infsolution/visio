@@ -21,6 +21,11 @@
 			{% endif %}
 			{% endwith %}
 			{% endfor %}
+			{% if page_links %}
+				{% for link in page_links %}
+				<span onmouseover="audio_desc('{{link.id_name}}')" onclick="show_content('show','{{link.items.all.0.id_description}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">{{link.name|title}}</span>
+				{% endfor %}
+			{% endif %}
 				<!--span onmouseenter="audio_desc('content-resume')" onclick="show_content('show','links')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">Links</span-->
         <!--span onmouseenter="audio_desc('content-resume')" onclick="show_content('show','{{page.h1}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">Título página</span-->
     </div>
@@ -44,6 +49,18 @@
 			{% endif %}
 			{% endwith %}
 			{% endfor %}
+			{% if page_links %}
+				{% for link in page_links %}
+					<span  id="{{link.items.all.0.id_description}}" style="display: none" >
+					<p onmouseover="audio_desc('{{link.items.all.0.path_audio}}')">{{link.items.all.0.description}}</p>
+					<form method="POST" action="{% url 'link' %}">
+						{% csrf_token %}
+						<input type="hidden" name="link" value="{{link.items.all.0.id_description}}">
+						<input class="btn btn-primary btn-lg  btn-block active" type="submit" value="Visitar" onmouseover="audio_desc('visitar')">
+					</form>
+					</span>
+				{% endfor %}
+			{% endif %}
 		</div>
 	</div>
 {% endblock body %}

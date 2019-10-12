@@ -84,6 +84,18 @@ onload="audio_desc('{{page_desc.key}}')"
 			<audio src="{{ atr.name_audio }}" id="{{atr.id_name}}"></audio>
 		{% endfor %}
 	{% endif %}
+	
+	{% if page_links %}
+
+	<!-- links aqui-->
+
+	{% for link in page_links %}
+	<audio src="{{ link.items.all.0.path_audio }}" id="{{link.items.all.0.path_audio}}"></audio>
+	<audio src="{{ link.name_audio }}" id="{{link.id_name}}"></audio>
+	{% endfor %}
+	<!--fim links-->
+		{% endif %}
+
 	{% if values %}
 		{% for atrlink in values %}
 			<audio src="{{ atrlink.displayLink_audio }}" id="{{atrlink.displayLink_id}}"></audio>
@@ -92,6 +104,8 @@ onload="audio_desc('{{page_desc.key}}')"
 		{% endfor %}
 
 	{% endif %}
+
+
 	<div class="container-fluid">
 		<nav class="navbar navbar-light bg-light">
 		  <!--a class="navbar-brand" href="{% url 'index' %}" onmouseover="audio_desc('home')">Makevisio</a-->
