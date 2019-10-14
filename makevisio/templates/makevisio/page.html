@@ -61,6 +61,42 @@
 					</span>
 				{% endfor %}
 			{% endif %}
+
+			<!--PAGINATOR-->
+			 <nav aria-label="...">
+          <ul class="pagination">
+            {% if page_links.has_previous %}
+             <li class="page-item">
+              <a class="page-link" href="?page=1" tabindex="-1">&laquo;</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_links.previous_page_number }}" tabindex="-1">Anterior</a>
+            </li>
+            {% endif %}
+            {% for page in  page_links.paginator.page_range %}
+            <li class="page-item active">
+              {% if page_links.number == page %}
+              <!--a class="page-link" href="?page={{perfis_search.number}}">{{perfis_search.number}}</a-->
+              <span class="page-link">{{page_links.number}}<span class="sr-only">(current)</span></span>
+              {% else %}
+              <li class="page-item">
+              <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+              {% endif %}
+            </li>
+            
+            {% endfor %}
+            <!--li class="page-item"><a class="page-link" href="#">3</a></li-->
+              {% if page_links.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_links.next_page_number }}">Próxima</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_links.paginator.num_pages }}"> &raquo;</a>
+            </li>
+            {% endif %}
+          </ul>
+        </nav>
+		<!--ENDPAGINATOR-->
 		</div>
 	</div>
 {% endblock body %}
