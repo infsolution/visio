@@ -95,7 +95,6 @@ class Page:
 					opt_link=link.get("href"), atributo=atr)
 					item.save()
 					self.list_links.append(atr)
-			print(len(self.list_links))
 
 	def add_form(self):
 		if self.page.form:

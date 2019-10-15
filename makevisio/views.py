@@ -59,3 +59,7 @@ def create_id(value):
 	value_id = value[0:10]
 	value_id += datetime.now().strftime("%d-%b-%Y-%H:%M:%S.%f")
 	return value_id
+
+def paginacao(request, start_id):
+	items = Atribut.objects.filter(id__gte=start_id)
+	return render(request, 'makevisio/page_links.html',{'page_links':items, 'page':[]})

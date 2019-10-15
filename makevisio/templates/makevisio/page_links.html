@@ -6,62 +6,37 @@
 
   <div class="row">
 		<div class="col-md-4">
-			<h2><a href="#" class="btn btn-primary btn-lg  btn-block active" onmouseover="audio_desc('sys_referencia')"role="button" aria-pressed="true" >REFERÊNCIA</a></h2>
+			<h2><a href="#" class="btn btn-primary btn-lg  btn-block active" onmouseover="audio_desc('sys_referencia')"role="button" aria-pressed="true" >Links</a></h2>
 
 			<a href="{% url 'index' %}" class="btn btn-primary btn-lg  btn-block active" onmouseover="audio_desc('home')">Pagina inicial</a>
 
 			{% if error %}
 			<span>{{error}}</span>
 			{% endif %}
-			{% for atr in page %}
-			{% with items=atr.items.count %}
-			{% if items >= 1 %}
-				<!--show','{{atr.items.all.0.id_description}}-->
-				<span onmouseover="audio_desc('{{atr.id_name}}')" onclick="show_content('show','{{atr.items.all.0.id_description}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">{{atr.name|title}}</span>
-			{% endif %}
-			{% endwith %}
-			{% endfor %}
 			{% if page_links %}
-				<!--{% for link in page_links %}
+				{% for link in page_links %}
 				<span onmouseover="audio_desc('{{link.id_name}}')" onclick="show_content('show','{{link.items.all.0.id_description}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">{{link.name|title}}</span>
-				{% endfor %}-->
-				<a href="{% url 'paginacao' page_links.0.id %}" onmouseover="audio_desc('{{links}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">Links</a>
+				{% endfor %}
 			{% endif %}
 				<!--span onmouseenter="audio_desc('content-resume')" onclick="show_content('show','links')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">Links</span-->
         <!--span onmouseenter="audio_desc('content-resume')" onclick="show_content('show','{{page.h1}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">Título página</span-->
     </div>
 		<div class="col-md-8">
 			<h2><a href="#" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true" onmouseover="audio_desc('sys_conteudo')">CONTEÚDO</a></h2>
-			<div id="show" onmouseover="audio_desc('{{atr.id_name}}')">
+			<div id="show">
 			
 			</div>
-			{% for atr in page %}
-			{% with items=atr.items.count %}
-			{% if items >= 1 %}
-				{% for item in atr.items.all %}
-					<div  id="{{item.id_description}}" style="display: none" >
-						<p onmouseover="audio_desc('{{item.path_audio}}')">{{item.description}}</p>
-					</div>
-				{% endfor %}
-			{%  else%}
-				<span  id="{{atr.items.all.0.id_description}}" style="display: none" >
-				<p onmouseover="audio_desc('{{atr.items.all.0.path_audio}}')">{{atr.items.all.0.description}}</p>
-				</span>
-			{% endif %}
-			{% endwith %}
-			{% endfor %}
 			{% if page_links %}
 				{% for link in page_links %}
 					<span  id="{{link.items.all.0.id_description}}" style="display: none" >
 					<p onmouseover="audio_desc('{{link.items.all.0.path_audio}}')">{{link.items.all.0.description}}</p>
 					<form method="POST" action="{% url 'link' %}">
 						{% csrf_token %}
-						<input type="hidden" name="link" value="{{link.items.all.0.id_description}}">
+						<input type="hidden" name="link" value="{{link.items.all.0.description}}">
 						<input class="btn btn-primary btn-lg  btn-block active" type="submit" value="Visitar" onmouseover="audio_desc('visitar')">
 					</form>
 					</span>
 				{% endfor %}
-
 			{% endif %}
 
 			

@@ -77,6 +77,7 @@ onload="audio_desc('{{page_desc.key}}')"
 	<audio src="media/sys/sys_home.wav" id="home"></audio>
 	<audio src="media/sys/sys_logo.wav" id="logo"></audio>
 	<audio src="media/sys/sys_visitar.wav" id="visitar"></audio>
+	<audio src="media/sys/sys_links.wav" id="links"></audio>
 
 	{% if page %}
 		{% for atr in page %}
@@ -90,11 +91,11 @@ onload="audio_desc('{{page_desc.key}}')"
 	<!-- links aqui-->
 
 	{% for link in page_links %}
-	<audio src="{{ link.items.all.0.path_audio }}" id="{{link.items.all.0.path_audio}}"></audio>
+	<audio src="{{ link.items.all.0.path_audio }}" id="{{link.items.all.0.id_description}}"></audio>
 	<audio src="{{ link.name_audio }}" id="{{link.id_name}}"></audio>
 	{% endfor %}
 	<!--fim links-->
-		{% endif %}
+	{% endif %}
 
 	{% if values %}
 		{% for atrlink in values %}
