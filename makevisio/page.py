@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 from django.core.files.storage import FileSystemStorage
-from bs4 import BeautifulSoup
+from background_task import background
 from urllib.request import urlopen
+from django.utils import timezone
+from bs4 import BeautifulSoup
 from .synthesizer import *
 from . models import *
-import json
 import requests
+import json
 import re
 class Page:
 	def __init__(self, url):
@@ -27,6 +29,7 @@ class Page:
 		except Exception as e:
 			return None
 		page = BeautifulSoup(r.text, features="html.parser")
+		print(page)
 		return page
 
 	def add_element(self, key, value):
@@ -67,9 +70,8 @@ class Page:
 			atr = Atribut(name='conteudo', name_audio=synt.synthesizer('conteúdo'), id_name='conteudo_audio')
 			atr.save()
 			item = Item(description=word, path_audio=synt.synthesizer(word),
-				id_description=self.replace_all(word), atributo=atr)
+				id_description='content_description', atributo=atr)
 			item.save()
-			self.list_page.append(atr)
 		else:
 			for p in content_alt:
 				if p.get_text() != None and len(p.get_text()) > 60:
@@ -79,35 +81,39 @@ class Page:
 			atr = Atribut(name='conteudo', name_audio=synt.synthesizer('conteúdo'), id_name='conteudo_audio')
 			atr.save()
 			item = Item(description=word, path_audio=synt.synthesizer(word),
-				id_description=self.replace_all(word), atributo=atr)
+				id_description='content_description', atributo=atr)
 			item.save()
-			self.list_page.append(atr)
+		self.list_page.append(atr)
 
 	def add_link(self):
 		links = self.page.body.find_all("a",href=True)
+		lista = self.select_tag(links)
+		self.links_synthesizer(lista)
+
+	#@background(schedule=0)
+	def links_synthesizer(self, links):
 		if links:
 			synt = Synthesizer()
-			for link in links:
-				if link.get_text():
-					atr = Atribut(name=link.get_text(), name_audio=synt.synthesizer(link.get_text()), id_name=self.replace_all(link.get_text()))
-					atr.save()
-					item = Item(description=link.get("href"), path_audio=synt.synthesizer(link.get("href")), id_description=self.replace_all(link.get("href")),
-					opt_link=link.get("href"), atributo=atr)
-					item.save()
-					self.list_links.append(atr)
+			for key, value in links.items():
+				atr = Atribut(name=key, name_audio=synt.synthesizer(key), id_name=synt.replace_all(key))
+				atr.save()
+				item = Item(description=value, path_audio=synt.synthesizer(value), id_description=synt.replace_all(value),
+				opt_link=value, atributo=atr)
+				item.save()
+				self.list_links.append(atr)
+	def select_tag(self, links):
+		links_dic = {}
+		for link in links:
+			if link.get_text() != "" and len(link.get_text()) > 5 and 'http' in link.get("href"):
+				links_dic[link.get_text()]=link.get("href")
+		return links_dic
 
 	def add_form(self):
 		if self.page.form:
 			self.add_element('formulário', self.page.form)
 
 	def load_data(self):
-		self.add_link()
 		self.add_title()
-		#self.add_h1()
 		self.add_content()
 		#self.add_form()
-
-	def replace_all(self, word):
-		for w in [" ","/","|","'","_","-","%","*","&","#","@","(",")","+","=","!","?",",",".",":",";","ã","Â","Ã","ã","ú","Ú","ó","Ó"]:
-			word = word.replace(w, "")
-		return word[2:10]+'_desc'
+		self.add_link()

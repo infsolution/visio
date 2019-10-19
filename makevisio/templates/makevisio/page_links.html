@@ -1,12 +1,113 @@
-{% extends "makevisio/base.html" %}
-{% block head %}
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<title>MakeVisio</title>
+	<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fontawesome/css/fontawesome-all.min.css' %}">
+	{% block head %}
+    {% endblock %}
+<script>
+function audio_desc(element){
+    const espeak_links = document.getElementById(element);
+    espeak_links.play();
+}
+/*function audio_desc_list(object){
+	object.forEach(function (value,index, array) {
+		value.play()
+	});
+}*/
 
-{% endblock %}
-{% block body %}
+function show_content(element, text){
+	var show_item = document.getElementById(element).innerHTML=document.getElementById(text).innerHTML;
+}
+/*function show_by_class(class_name){
+	var items = document.getElementsByClassName(class_name)
+	for(var i = 0; i<= items.length;i++){
+		items[i].style.display = 'block'
+	}
 
-  <div class="row">
+}*/
+function getCoordinate(e) {
+		  	var x = e.clientX;
+		  	var y = e.clientY;
+		  	var wt = screen.width;
+		  	var ht = screen.height;
+		 	//var coor = "Coordinates: (" + x + "," + y+" largura "+wt+" altura "+ht+" )";
+  			//document.getElementById("demo").innerHTML = coor;
+  			if(x <= 5){
+  				const espeak_links = document.getElementById('esquerda');
+  				espeak_links.play();
+  			}
+  			if(x >= wt-5){
+  				const espeak_links = document.getElementById('direita');
+  				espeak_links.play();
+  			}
+  			if(y <= 5){
+  				const espeak_links = document.getElementById('topo');
+  				espeak_links.play();
+  			}
+  			if(y == ht-5){
+  				const espeak_links = document.getElementById('bottom');
+  				espeak_links.play();
+  			}
+		}
+</script>
+</head>
+
+<body
+{% if page_desc %}
+onload="audio_desc('{{page_desc.key}}')"
+{% endif %}>
+<div  onmousemove="getCoordinate(event)">
+	{% if page_desc %}
+	<audio src="media/{{page_desc.value}}.wav" id="{{page_desc.key}}"></audio>
+	{% endif %}
+	<audio src="/media/sys/sys_input.wav" id="input"></audio>
+	<audio src="/media/sys/sys_button.wav" id="button"></audio>
+	<audio src="/media/sys/sys_beep.wav" id="beep"></audio>
+	<audio src="/media/sys/sys_esquerda.wav" id="esquerda"></audio>
+	<audio src="/media/sys/sys_direita.wav" id="direita"></audio>
+	<audio src="/media/sys/sys_topo.wav" id="topo"></audio>
+	<audio src="/media/sys/sys_bottom.wav" id="bottom"></audio>
+	<audio src="/media/sys/sys_conteudo.wav" id="sys_conteudo"></audio>
+	<audio src="/media/sys/sys_referencia.wav" id="sys_referencia"></audio>
+	<audio src="/media/sys/sys_home.wav" id="home"></audio>
+	<audio src="/media/sys/sys_logo.wav" id="logo"></audio>
+	<audio src="/media/sys/sys_visitar.wav" id="visitar"></audio>
+	<audio src="/media/sys/sys_links.wav" id="links"></audio>
+	<audio src="/media/sys/sys_proxima.wav" id="proxima"></audio>
+	<audio src="/media/sys/sys_anterior.wav" id="anterior"></audio>
+
+	{% if page_links %}
+
+	{% for link in page_links %}
+	<audio src="/{{ link.items.all.0.path_audio }}" id="{{link.items.all.0.path_audio}}"></audio>
+	<audio src="/{{ link.name_audio }}" id="{{link.id_name}}"></audio>
+	{% endfor %}
+	{% endif %}
+
+
+	<div class="container-fluid">
+		<nav class="navbar navbar-light bg-light">
+		  <!--a class="navbar-brand" href="{% url 'index' %}" onmouseover="audio_desc('home')">Makevisio</a-->
+		  <!--h1 onmouseover="audio_desc('logo')">Makevisio</h1-->
+		</nav>
+		<div class="row  justify-content-center">
+			<nav class="navbar navbar-light bg-light d-flex ">
+			  <form class="form-inline" method="GET" action="{% url 'buscar_item' %}" >
+			    <input class="form-control mr-sm-2" type="search" placeholder="O que procura?" name="busca" onmouseover="audio_desc('input')" autofocus>
+			    <button class="btn btn-primary my-2 my-sm-0" type="submit" onmouseover="audio_desc('button')">Search</button>
+			  </form>
+			</nav>
+		</div>
+		<br/>
+
+		  <div class="row">
 		<div class="col-md-4">
-			<h2><a href="#" class="btn btn-primary btn-lg  btn-block active" onmouseover="audio_desc('sys_referencia')"role="button" aria-pressed="true" >Links</a></h2>
+			<!--h2><a href="#" class="btn btn-primary btn-lg  btn-block active" onmouseover="audio_desc('sys_referencia')"role="button" aria-pressed="true" >Referências</a></h2-->
 
 			<a href="{% url 'index' %}" class="btn btn-primary btn-lg  btn-block active" onmouseover="audio_desc('home')">Pagina inicial</a>
 
@@ -18,13 +119,55 @@
 				<span onmouseover="audio_desc('{{link.id_name}}')" onclick="show_content('show','{{link.items.all.0.id_description}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">{{link.name|title}}</span>
 				{% endfor %}
 			{% endif %}
+
+
+	{% if page_links.has_previous %}
+		 <a class="btn btn-primary btn-lg  btn-block active" href="?page={{ page_links.previous_page_number }}" tabindex="-1" onmouseover="audio_desc('anterior')">Página Anterior</a>
+	{% endif %}
+
+	{% if page_links.has_next %}
+		<a class="btn btn-primary btn-lg  btn-block active" href="?page={{ page_links.next_page_number }}" onmouseover="audio_desc('proxima')">Próxima Página</a>
+	{% endif %}
+
+	<!--nav aria-label="...">
+          <ul class="pagination">
+            {% if posts.has_previous %}
+             <li class="page-item">
+              <a class="page-link" href="?page=1" tabindex="-1">&laquo;</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="?page={{ posts.previous_page_number }}" tabindex="-1">Anterior</a>
+            </li>
+            {% endif %}
+            {% for page in  posts.paginator.page_range %}
+            <li class="page-item active">
+              {% if posts.number == page %}
+              <a class="page-link" href="?page={{perfis_search.number}}">{{perfis_search.number}}</a>
+              <span class="page-link">{{posts.number}}<span class="sr-only">(current)</span></span>
+              {% else %}
+              <li class="page-item">
+              <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+              {% endif %}
+            </li>
+            {% endfor %}
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+              {% if posts.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ posts.next_page_number }}">Próxima</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="?page={{ posts.paginator.num_pages }}"> &raquo;</a>
+            </li>
+            {% endif %}
+          </ul>
+    </nav-->
 				<!--span onmouseenter="audio_desc('content-resume')" onclick="show_content('show','links')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">Links</span-->
         <!--span onmouseenter="audio_desc('content-resume')" onclick="show_content('show','{{page.h1}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">Título página</span-->
     </div>
 		<div class="col-md-8">
-			<h2><a href="#" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true" onmouseover="audio_desc('sys_conteudo')">CONTEÚDO</a></h2>
+			<!--h2><a href="#" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true" onmouseover="audio_desc('sys_conteudo')">CONTEÚDO</a></h2-->
 			<div id="show">
-			
+
 			</div>
 			{% if page_links %}
 				{% for link in page_links %}
@@ -38,8 +181,14 @@
 					</span>
 				{% endfor %}
 			{% endif %}
-
-			
 		</div>
 	</div>
-{% endblock body %}
+
+	</div>
+	<script defer src="{% static 'fontawesome/js/fontawesome-all.min.js' %}"></script>
+	<script src="{% static 'bootstrap/js/jquery.min.js' %}"></script>
+	<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+	<script src="{% static 'admin/js/myfunctions.js' %}"></script>
+</div>
+</body>
+</html>
