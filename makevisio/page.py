@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.core.files.storage import FileSystemStorage
-from background_task import background
+#from background_task import background
 from urllib.request import urlopen
 from django.utils import timezone
 from bs4 import BeautifulSoup
@@ -29,7 +29,6 @@ class Page:
 		except Exception as e:
 			return None
 		page = BeautifulSoup(r.text, features="html.parser")
-		print(page)
 		return page
 
 	def add_element(self, key, value):
@@ -92,6 +91,8 @@ class Page:
 
 	#@background(schedule=0)
 	def links_synthesizer(self, links):
+		links = self.clean_key(links)
+		print(links)
 		if links:
 			synt = Synthesizer()
 			for key, value in links.items():
@@ -117,3 +118,10 @@ class Page:
 		self.add_content()
 		#self.add_form()
 		self.add_link()
+	def clean_key(self, diction):
+		dic = {}
+		for key, value in diction.items():
+			k = key.replace('\n','')
+			k = k[0:30]
+			dic[k] = value
+		return dic

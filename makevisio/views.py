@@ -35,8 +35,8 @@ def get_page(request,url):
 
 def get_page_link(request):
 	if request.POST.get('link'):
-		page = Page(requests.POST.get('link'))
-		return render(request,'makevisio/page.html',{'page':page.list_page,})
+		page = Page(request.POST.get('link'))
+		return render(request,'makevisio/page.html',{'page':page.list_page,'page_links':page.list_links,})
 
 
 def create_audio_desc(response_json):
@@ -64,7 +64,6 @@ def paginacao(request, start_id):
 	items = Atribut.objects.filter(id__gte=start_id)
 	paginator = Paginator(items, ITEMS_PER_PAGE)
 	page = request.GET.get('page',1)
-	print(page)
 	try:
 		items_page = paginator.get_page(page)
 	except InvalidPage:

@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'bootstrap',
     'fontawesome',
     'makevisio.apps.MakevisioConfig',
-    'background_task',
+    #'background_task',
 ]
 
 MIDDLEWARE = [
