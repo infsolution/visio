@@ -62,6 +62,15 @@ function audio_stop(element){
 function voltar(){
 	window.history.back()
 }
+function desc_confirm(input){
+	var audio
+	var valor = document.getElementById(input)
+	if(valor.value == ''){
+		audio = document.getElementById('alert_input').play()
+	}else{
+		audio =document.getElementById('aguarde').play()
+	}
+}
 </script>
 
 </head>
@@ -82,8 +91,9 @@ function voltar(){
 	<audio src="/media/sys/sys_visitar.wav" id="visitar"></audio>
 	<audio src="/media/sys/sys_links.wav" id="links"></audio>
 	<audio src="/media/sys/sys_pronta.wav" id="pronta"></audio>
-	<audio src="media/sys/sys_aguarde.wav" id="aguarde"></audio>
+	<audio src="/media/sys/sys_aguarde.wav" id="aguarde"></audio>
 	<audio src="/media/sys/sys_anterior.wav" id="anterior"></audio>
+	<audio src="/media/sys/sys_alert_input.wav" id="alert_input"></audio>
 
 	{% if page %}
 		{% for atr in page %}
@@ -111,8 +121,8 @@ function voltar(){
 			<nav class="navbar navbar-light bg-light d-flex ">
 			  <form class="form-inline" method="POST" action="{% url 'buscar_item' %}" >
 				{% csrf_token %}
-				<input class="form-control mr-sm-2" type="search" placeholder="O que procura?" name="busca" onmouseover="audio_desc('input')" autofocus>
-			    <button class="btn btn-primary my-2 my-sm-0" type="submit" onclick="audio_desc('aguarde')" onmouseover="audio_desc('button')">Buscar</button>
+				<input class="form-control mr-sm-2" type="search" placeholder="O que procura?" name="busca" onmouseover="audio_desc('input')" id="search_input" autofocus required>
+			    <button class="btn btn-primary my-2 my-sm-0" type="submit" onclick="desc_confirm('search_input')" onmouseover="audio_desc('button')">Buscar</button>
 			  </form>
 			</nav>
 		</div>
