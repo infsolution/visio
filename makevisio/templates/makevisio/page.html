@@ -23,6 +23,7 @@
 			{% if page_links %}
 				<a href="{% url 'paginacao' page_links.0.id %}" onmouseover="audio_desc('links')" onmouseout="audio_stop('links')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">Links</a>
 			{% endif %}
+			<button class="btn btn-primary btn-lg  btn-block active" onmouseover="audio_desc('anterior')" onmouseout="audio_stop('anterior')" onclick="voltar()">Voltar</button>
 				<!--span onmouseenter="audio_desc('content-resume')" onclick="show_content('show','links')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">Links</span-->
         <!--span onmouseenter="audio_desc('content-resume')" onclick="show_content('show','{{page.h1}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">Título página</span-->
     </div>

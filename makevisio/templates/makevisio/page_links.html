@@ -59,13 +59,13 @@ function audio_stop(element){
 	audio.pause()
 	audio.currentTime = 0;
 }
+function voltar(){
+	window.history.back()
+}
 </script>
 </head>
 
-<body
-{% if page_desc %}
-onload="audio_desc('{{page_desc.key}}')"
-{% endif %}>
+<body onload="audio_desc('page_links')" >
 <div  onmousemove="getCoordinate(event)">
 	{% if page_desc %}
 	<audio src="media/{{page_desc.value}}.wav" id="{{page_desc.key}}"></audio>
@@ -85,6 +85,8 @@ onload="audio_desc('{{page_desc.key}}')"
 	<audio src="/media/sys/sys_links.wav" id="links"></audio>
 	<audio src="/media/sys/sys_proxima.wav" id="proxima"></audio>
 	<audio src="/media/sys/sys_anterior.wav" id="anterior"></audio>
+	<audio src="/media/sys/sys_page_links.wav" id="page_links"></audio>
+	<audio src="media/sys/sys_aguarde.wav" id="aguarde"></audio>
 
 	{% if page_links %}
 
@@ -105,7 +107,7 @@ onload="audio_desc('{{page_desc.key}}')"
 			  <form class="form-inline" method="POST" action="{% url 'buscar_item' %}" >
 				{% csrf_token %}
 				<input class="form-control mr-sm-2" type="search" placeholder="O que procura?" name="busca" onmouseover="audio_desc('input')" autofocus>
-			    <button class="btn btn-primary my-2 my-sm-0" type="submit" onmouseover="audio_desc('button')">Search</button>
+			    <button class="btn btn-primary my-2 my-sm-0" type="submit" onclick="audio_desc('aguarde')" onmouseover="audio_desc('button')">Buscar</button>
 			  </form>
 			</nav>
 		</div>
@@ -129,6 +131,8 @@ onload="audio_desc('{{page_desc.key}}')"
 
 	{% if page_links.has_previous %}
 		 <a class="btn btn-primary btn-lg  btn-block active" href="?page={{ page_links.previous_page_number }}" tabindex="-1" onmouseover="audio_desc('anterior')" onmouseout="audio_stop('anterior')">Página Anterior</a>
+	{%else%}
+	<button class="btn btn-primary btn-lg  btn-block active" onmouseover="audio_desc('anterior')" onmouseout="audio_stop('anterior')" onclick="voltar()">Voltar</button>
 	{% endif %}
 
 	{% if page_links.has_next %}
@@ -178,12 +182,12 @@ onload="audio_desc('{{page_desc.key}}')"
 			{% if page_links %}
 				{% for link in page_links %}
 					<span  id="{{link.items.all.0.id_description}}" style="display: none" >
-					<p onmouseover="audio_desc('{{link.items.all.0.path_audio}}')" onmouseout="audio_stop('{{link.items.all.0.path_audio}}')">{{link.items.all.0.description}}</p>
 					<form method="POST" action="{% url 'link' %}">
 						{% csrf_token %}
 						<input type="hidden" name="link" value="{{link.items.all.0.description}}">
 						<input class="btn btn-primary btn-lg  btn-block active" type="submit" value="Visitar" onmouseover="audio_desc('visitar')">
 					</form>
+					<p onmouseover="audio_desc('{{link.items.all.0.path_audio}}')" onmouseout="audio_stop('{{link.items.all.0.path_audio}}')">{{link.items.all.0.description}}</p>
 					</span>
 				{% endfor %}
 			{% endif %}

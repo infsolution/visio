@@ -12,7 +12,7 @@
 <script>
 function audio_desc(element){
     const espeak_links = document.getElementById(element);
-    espeak_links.play(); 
+    espeak_links.play();
 }
 /*function audio_desc_list(object){
 	object.forEach(function (value,index, array) {
@@ -59,13 +59,13 @@ function audio_stop(element){
 	audio.pause()
 	audio.currentTime = 0;
 }
+function voltar(){
+	window.history.back()
+}
 </script>
 </head>
 
-<body
-{% if page_desc %}
-onload="audio_desc('{{page_desc.key}}')"
-{% endif %}>
+<body onload="audio_desc('pronta')">
 <div  onmousemove="getCoordinate(event)">
 	{% if page_desc %}
 	<audio src="/media/{{page_desc.value}}.wav" id="{{page_desc.key}}"></audio>
@@ -83,6 +83,10 @@ onload="audio_desc('{{page_desc.key}}')"
 	<audio src="/media/sys/sys_logo.wav" id="logo"></audio>
 	<audio src="/media/sys/sys_visitar.wav" id="visitar"></audio>
 	<audio src="/media/sys/sys_links.wav" id="links"></audio>
+	<audio src="/media/sys/sys_proxima.wav" id="proxima"></audio>
+	<audio src="/media/sys/sys_anterior.wav" id="anterior"></audio>
+	<audio src="/media/sys/sys_pronta.wav" id="pronta"></audio>
+	<audio src="media/sys/sys_aguarde.wav" id="aguarde"></audio>
 
 	{% if values %}
 		{% for atrlink in values %}
@@ -100,30 +104,37 @@ onload="audio_desc('{{page_desc.key}}')"
 			  <form class="form-inline" method="POST" action="{% url 'buscar_item' %}" >
 				{% csrf_token %}
 				<input class="form-control mr-sm-2" type="search" placeholder="O que procura?" name="busca" onmouseover="audio_desc('input')" autofocus>
-			    <button class="btn btn-primary my-2 my-sm-0" type="submit" onmouseover="audio_desc('button')">Search</button>
+			    <button class="btn btn-primary my-2 my-sm-0" type="submit" onclick="audio_desc('aguarde')" onmouseover="audio_desc('button')">Buscar</button>
 			  </form>
 			</nav>
 		</div>
-		<br/>	
+		<br/>
 	<div class="row">
 		<div class="col-md-4">
-			<h2><a href="#" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true" onmouseover="audio_desc('sys_referencia')" onmouseout="audio_stop('sys_referencia')">REFERÊNCIA</a></h2>
 			<a href="{% url 'index' %}" class="btn btn-primary btn-lg  btn-block active" onmouseover="audio_desc('home')" onmouseout="audio_stop('home')">Pagina inicial</a>
 			{% if error %}
 			<span>{{error}}</span>
 			{% endif %}
+			{% if values %}
 			{% for link in values %}
 			<form method="POST" action="{% url 'link' %}" class="btn btn-primary btn-sm  btn-block active">
 				{% csrf_token %}
 				<input type="hidden" name="link" value="{{link.link}}">
-				<input class="btn btn-primary btn-lg  btn-block active" type="submit" value="{{ link.title }}" onmouseover="audio_desc('{{link.displayLink_id}}')" onmouseout="audio_stop('{{link.displayLink_id}}')"role="button" aria-pressed="true">
+				<input class="btn btn-primary btn-lg  btn-block active" type="submit" value="{{ link.title }}" onmouseover="audio_desc('{{link.title_id}}')" onmouseout="audio_stop('{{link.title_id}}')"role="button" aria-pressed="true" onclick="audio_desc('aguarde')">
 			</form>
-		
-				<!--span onmouseover="audio_desc('{{link.displayLink_id}}')" onclick="show_content('show','{{link.title_id}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">{{link.displayLink}}</span-->
 			{% endfor %}
+			{% endif %}
+			{% if next_page %}
+			<form method="GET" action="{% url 'next' %}" class="btn btn-primary btn-sm  btn-block active">
+				{% csrf_token %}
+				<input type="hidden" name="busca" value="{{next_page.searchTerms}}">
+				<input type="hidden" name="start" value="{{next_page.startIndex}}">
+				<input class="btn btn-primary btn-lg  btn-block active" type="submit" value="Próxima" onmouseover="audio_desc('proxima')" onmouseout="audio_stop('proxima')" role="button" aria-pressed="true">
+			</form>
+			{% endif %}
+				<button class="btn btn-primary btn-lg  btn-block active" onmouseover="audio_desc('anterior')" onmouseout="audio_stop('anterior')" onclick="voltar()">Voltar</button>
 		</div>
 		<div class="col-md-8">
-			<h2><a href="#" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true" onmouseover="audio_desc('sys_conteudo')" onmouseout="audio_stop('sys_conteudo')">CONTEÚDO</a></h2>
 			<div id="show" style="display: block">
 			</div>
 			{% for link in values %}
@@ -133,11 +144,11 @@ onload="audio_desc('{{page_desc.key}}')"
 				<form method="POST" action="{% url 'link' %}">
 					{% csrf_token %}
 					<input type="hidden" name="link" value="{{link.link}}">
-					<input class="btn btn-primary btn-lg  btn-block active" type="submit" value="Visitar" onmouseover="audio_desc('visitar')" onmouseout="audio_stop('visitar')">
+					<input class="btn btn-primary btn-lg  btn-block active" type="submit" value="Visitar" onmouseover="audio_desc('visitar')" onmouseout="audio_stop('visitar')" onclick="audio_desc('aguarde')">
 				</form>
 			</div>
 			{% endfor %}
-		</div>			
+		</div>
 	</div>
 </div>
 <script defer src="{% static 'fontawesome/js/fontawesome-all.min.js' %}"></script>

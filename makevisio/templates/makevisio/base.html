@@ -59,18 +59,15 @@ function audio_stop(element){
 	audio.pause()
 	audio.currentTime = 0;
 }
+function voltar(){
+	window.history.back()
+}
 </script>
 
 </head>
 
-<body
-{% if page_desc %}
-onload="audio_desc('{{page_desc.key}}')"
-{% endif %}>
+<body onload="audio_desc('pronta')">
 <div  onmousemove="getCoordinate(event)">
-	{% if page_desc %}
-	<audio src="/media/{{page_desc.value}}.wav" id="{{page_desc.key}}"></audio>
-	{% endif %}
 	<audio src="/media/sys/sys_input.wav" id="input"></audio>
 	<audio src="/media/sys/sys_button.wav" id="button"></audio>
 	<audio src="/media/sys/sys_beep.wav" id="beep"></audio>
@@ -84,6 +81,9 @@ onload="audio_desc('{{page_desc.key}}')"
 	<audio src="/media/sys/sys_logo.wav" id="logo"></audio>
 	<audio src="/media/sys/sys_visitar.wav" id="visitar"></audio>
 	<audio src="/media/sys/sys_links.wav" id="links"></audio>
+	<audio src="/media/sys/sys_pronta.wav" id="pronta"></audio>
+	<audio src="media/sys/sys_aguarde.wav" id="aguarde"></audio>
+	<audio src="/media/sys/sys_anterior.wav" id="anterior"></audio>
 
 	{% if page %}
 		{% for atr in page %}
@@ -112,7 +112,7 @@ onload="audio_desc('{{page_desc.key}}')"
 			  <form class="form-inline" method="POST" action="{% url 'buscar_item' %}" >
 				{% csrf_token %}
 				<input class="form-control mr-sm-2" type="search" placeholder="O que procura?" name="busca" onmouseover="audio_desc('input')" autofocus>
-			    <button class="btn btn-primary my-2 my-sm-0" type="submit" onmouseover="audio_desc('button')">Search</button>
+			    <button class="btn btn-primary my-2 my-sm-0" type="submit" onclick="audio_desc('aguarde')" onmouseover="audio_desc('button')">Buscar</button>
 			  </form>
 			</nav>
 		</div>

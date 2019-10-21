@@ -19,15 +19,33 @@ def search_google(request):
 			url = 'https://www.googleapis.com/customsearch/v1'
 			params = {"key":"AIzaSyB_Uc-MGGJuKcZHGTU29UtbeL_V9H90Dgw",
 				"cx":"000119369848927943107:8no6nr65eju",
-				"q":request.POST.get('busca')}
+				"q":request.POST.get('busca'),
+				"num":5}
 			try:
 				response = requests.get(url, params)
 			except Exception as e:
-				print("Error: "+e)
-				return render(request,'makevisio/content.html',{"error":e})
-			return render(request,'makevisio/content.html',{'values':create_audio_desc(response.json()['items']),})
+				print("Error: "+str(e))
+				return render(request,'makevisio/content.html',{"error":str(e)})
+			return render(request,'makevisio/content.html',{'values':create_audio_desc(response.json()['items']),
+				'next_page':response.json()['queries']['nextPage'][0]})
 	else:
 		return render(request,'makevisio/content.html',{"error":"Sem resposta."})
+def search_next(request):
+	if request.GET.get('busca'):
+		url = 'https://www.googleapis.com/customsearch/v1'
+		params = {"key":"AIzaSyB_Uc-MGGJuKcZHGTU29UtbeL_V9H90Dgw",
+				"cx":"000119369848927943107:8no6nr65eju",
+				"q":request.GET.get('busca'),
+				"num":5,
+				"start":request.GET.get('start')}
+		try:
+			response = requests.get(url, params)
+		except Exception as e:
+			return render(request,'makevisio/content.html',{"error":e})
+		return render(request,'makevisio/content.html',{'values':create_audio_desc(response.json()['items']),
+			'next_page':response.json()['queries']['nextPage'][0]})
+	else:
+		return render(request,'makevisio/content.html',{"error":"A busca não encountro nenhum resultatado"})
 
 def get_page(request,url):
 	page = Page(url)

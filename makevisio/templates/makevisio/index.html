@@ -55,6 +55,7 @@
 	<audio src="media/sys/sys_direita.wav" id="direita"></audio>
 	<audio src="media/sys/sys_topo.wav" id="topo"></audio>
 	<audio src="media/sys/sys_bottom.wav" id="bottom"></audio>
+	<audio src="media/sys/sys_aguarde.wav" id="aguarde"></audio>
 	<div class="container-fluid">
 		<div class="row justify-content-center align-items-center">
 			<form class="form-inline" method="POST" action="{% url 'buscar_item' %}">
@@ -62,7 +63,7 @@
 				<div class="input-group mb-3">
 					<input class="form-control" type="search" placeholder="MAKEVISIO" name="busca" required autofocus onmouseover="audio_desc('input')">
 				<div class="input-group-append" >
-			    <button class="btn btn-primary" type="submit" onmouseover="audio_desc('button')">Search</button>
+			    <button class="btn btn-primary" type="submit" onmouseover="audio_desc('button')" onclick="audio_desc('aguarde')">Search</button>
 				</div>
 				</div>
 
