@@ -53,7 +53,7 @@ class Page:
 	def add_item(self, items):
 		string = ''
 		for item in items:
-			string += item
+			string += ' '+item
 		return string
 
 	def add_content(self):
@@ -92,7 +92,6 @@ class Page:
 	#@background(schedule=0)
 	def links_synthesizer(self, links):
 		links = self.clean_key(links)
-		print(links)
 		if links:
 			synt = Synthesizer()
 			for key, value in links.items():

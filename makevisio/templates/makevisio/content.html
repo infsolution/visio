@@ -1,44 +1,150 @@
-{% extends 'makevisio/base.html' %}
-{% block head %}
-<!--script>
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<title>MakeVisio</title>
+	<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fontawesome/css/fontawesome-all.min.css' %}">
+	{% block head %}
+    {% endblock %}
+<script>
+function audio_desc(element){
+    const espeak_links = document.getElementById(element);
+    espeak_links.play(); 
+}
+/*function audio_desc_list(object){
+	object.forEach(function (value,index, array) {
+		value.play()
+	});
+}*/
+
 function show_content(element, text){
 	var show_item = document.getElementById(element).innerHTML=document.getElementById(text).innerHTML;
 }
-</script-->
-{% endblock %}
+/*function show_by_class(class_name){
+	var items = document.getElementsByClassName(class_name)
+	for(var i = 0; i<= items.length;i++){
+		items[i].style.display = 'block'
+	}
 
-{% block body %}
-	
+}*/
+function getCoordinate(e) {
+		  	var x = e.clientX;
+		  	var y = e.clientY;
+		  	var wt = screen.width;
+		  	var ht = screen.height;
+		 	//var coor = "Coordinates: (" + x + "," + y+" largura "+wt+" altura "+ht+" )";
+  			//document.getElementById("demo").innerHTML = coor;
+  			if(x <= 5){
+  				const espeak_links = document.getElementById('esquerda');
+  				espeak_links.play();
+  			}
+  			if(x >= wt-5){
+  				const espeak_links = document.getElementById('direita');
+  				espeak_links.play();
+  			}
+  			if(y <= 5){
+  				const espeak_links = document.getElementById('topo');
+  				espeak_links.play();
+  			}
+  			if(y == ht-5){
+  				const espeak_links = document.getElementById('bottom');
+  				espeak_links.play();
+  			}
+		}
+function audio_stop(element){
+	var audio = document.getElementById(element);
+	audio.pause()
+	audio.currentTime = 0;
+}
+</script>
+</head>
+
+<body
+{% if page_desc %}
+onload="audio_desc('{{page_desc.key}}')"
+{% endif %}>
+<div  onmousemove="getCoordinate(event)">
+	{% if page_desc %}
+	<audio src="/media/{{page_desc.value}}.wav" id="{{page_desc.key}}"></audio>
+	{% endif %}
+	<audio src="/media/sys/sys_input.wav" id="input"></audio>
+	<audio src="/media/sys/sys_button.wav" id="button"></audio>
+	<audio src="/media/sys/sys_beep.wav" id="beep"></audio>
+	<audio src="/media/sys/sys_esquerda.wav" id="esquerda"></audio>
+	<audio src="/media/sys/sys_direita.wav" id="direita"></audio>
+	<audio src="/media/sys/sys_topo.wav" id="topo"></audio>
+	<audio src="/media/sys/sys_bottom.wav" id="bottom"></audio>
+	<audio src="/media/sys/sys_conteudo.wav" id="sys_conteudo"></audio>
+	<audio src="/media/sys/sys_referencia.wav" id="sys_referencia"></audio>
+	<audio src="/media/sys/sys_home.wav" id="home"></audio>
+	<audio src="/media/sys/sys_logo.wav" id="logo"></audio>
+	<audio src="/media/sys/sys_visitar.wav" id="visitar"></audio>
+	<audio src="/media/sys/sys_links.wav" id="links"></audio>
+
+	{% if values %}
+		{% for atrlink in values %}
+			<audio src="/{{ atrlink.displayLink_audio }}" id="{{atrlink.displayLink_id}}"></audio>
+			<audio src="/{{ atrlink.title_audio }}" id="{{atrlink.title_id}}"></audio>
+			<audio src="/{{ atrlink.snippet_audio }}" id="{{atrlink.snippet_id}}"></audio>
+		{% endfor %}
+
+	{% endif %}
+
+
+	<div class="container-fluid">
+		<div class="row  justify-content-center">
+			<nav class="navbar navbar-light bg-light d-flex ">
+			  <form class="form-inline" method="POST" action="{% url 'buscar_item' %}" >
+				{% csrf_token %}
+				<input class="form-control mr-sm-2" type="search" placeholder="O que procura?" name="busca" onmouseover="audio_desc('input')" autofocus>
+			    <button class="btn btn-primary my-2 my-sm-0" type="submit" onmouseover="audio_desc('button')">Search</button>
+			  </form>
+			</nav>
+		</div>
+		<br/>	
 	<div class="row">
 		<div class="col-md-4">
-			<h2><a href="#" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true" onmouseover="audio_desc('sys_referencia')">REFERÊNCIA</a></h2>
-			<a href="{% url 'index' %}" class="btn btn-primary btn-lg  btn-block active" onmouseover="audio_desc('home')">Pagina inicial</a>
+			<h2><a href="#" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true" onmouseover="audio_desc('sys_referencia')" onmouseout="audio_stop('sys_referencia')">REFERÊNCIA</a></h2>
+			<a href="{% url 'index' %}" class="btn btn-primary btn-lg  btn-block active" onmouseover="audio_desc('home')" onmouseout="audio_stop('home')">Pagina inicial</a>
 			{% if error %}
 			<span>{{error}}</span>
 			{% endif %}
 			{% for link in values %}
-				<span onmouseover="audio_desc('{{link.displayLink_id}}')" onclick="show_content('show','{{link.title_id}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">{{link.displayLink}}</span>
+			<form method="POST" action="{% url 'link' %}" class="btn btn-primary btn-sm  btn-block active">
+				{% csrf_token %}
+				<input type="hidden" name="link" value="{{link.link}}">
+				<input class="btn btn-primary btn-lg  btn-block active" type="submit" value="{{ link.title }}" onmouseover="audio_desc('{{link.displayLink_id}}')" onmouseout="audio_stop('{{link.displayLink_id}}')"role="button" aria-pressed="true">
+			</form>
+		
+				<!--span onmouseover="audio_desc('{{link.displayLink_id}}')" onclick="show_content('show','{{link.title_id}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">{{link.displayLink}}</span-->
 			{% endfor %}
 		</div>
 		<div class="col-md-8">
-			<h2><a href="#" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true" onmouseover="audio_desc('sys_conteudo')">CONTEÚDO</a></h2>
-			<span id="show">
-				<h1>CLIQUE EM UM LINK</h1>
-			</span>
-			{% for item in values %}
-			<span id="{{item.title_id}}" style="display: none">
-				<p>{{ item.title }}</p>
-				<p>{{item.snippet}}</p>
-				<!--p>{{item.link}}</p>
-				<p>{{item.displayLink}}</p-->
-				<!--p><a href="{{item.link}}">Visitar</a></p-->
+			<h2><a href="#" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true" onmouseover="audio_desc('sys_conteudo')" onmouseout="audio_stop('sys_conteudo')">CONTEÚDO</a></h2>
+			<div id="show" style="display: block">
+			</div>
+			{% for link in values %}
+			<div id="{{link.title_id}}" style="display: none" >
+				<p>{{ link.title }}</p>
+				<p>{{link.snippet}}</p>
 				<form method="POST" action="{% url 'link' %}">
 					{% csrf_token %}
-					<input type="hidden" name="link" value="{{item.link}}">
-					<input class="btn btn-primary btn-lg  btn-block active" type="submit" value="Visitar" onmouseover="audio_desc('visitar')">
+					<input type="hidden" name="link" value="{{link.link}}">
+					<input class="btn btn-primary btn-lg  btn-block active" type="submit" value="Visitar" onmouseover="audio_desc('visitar')" onmouseout="audio_stop('visitar')">
 				</form>
-			</span>
+			</div>
 			{% endfor %}
 		</div>			
 	</div>
-{% endblock %}
+</div>
+<script defer src="{% static 'fontawesome/js/fontawesome-all.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/jquery.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'admin/js/myfunctions.js' %}"></script>
+</div>
+</body>
+</html>
+

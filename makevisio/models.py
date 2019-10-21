@@ -4,7 +4,7 @@ from django.db import models
 
 
 class Atribut(models.Model):
-	name = models.CharField(max_length=255, null=False)
+	name = models.CharField(max_length=2048, null=False)
 	name_audio = models.CharField(max_length=2048, null=False)
 	id_name = models.CharField(max_length=255, null=False)
 
@@ -12,7 +12,7 @@ class Item(models.Model):
 	description = models.TextField()
 	path_audio = models.CharField(max_length=2048, null=False)
 	id_description = models.CharField(max_length=255, null=False)
-	opt_link = models.CharField(max_length=512, default="nolink")
+	opt_link = models.CharField(max_length=2048, default="nolink")
 	atributo = models.ForeignKey(Atribut, on_delete=models.CASCADE, related_name='items')
 
 class LinkAtribut(models.Model):

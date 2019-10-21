@@ -53,10 +53,10 @@ def create_audio_desc(response_json):
 
 def create_id(value):
 	value_id = ''
-	for w in [" ","/","|","'","_","-","%","*","&","#","@","(",")","+","=","!","?",",",".",":",";"]:
+	for w in [" ","/","|","'","_","-","%","*","&","#","@","(",")","+","=","!","?",",",".",":",";","<",">"]:
 			value = value.replace(w, "")
 	value_id = value[0:10]
-	value_id += datetime.now().strftime("%d-%b-%Y-%H:%M:%S.%f")
+	value_id += datetime.now().strftime("%d%b%Y%H%M%S%f")
 	return value_id
 
 def paginacao(request, start_id):

@@ -54,6 +54,11 @@ function getCoordinate(e) {
   				espeak_links.play();
   			}
 		}
+function audio_stop(element){
+	var audio = document.getElementById(element);
+	audio.pause()
+	audio.currentTime = 0;
+}
 </script>
 </head>
 
@@ -97,8 +102,9 @@ onload="audio_desc('{{page_desc.key}}')"
 		</nav>
 		<div class="row  justify-content-center">
 			<nav class="navbar navbar-light bg-light d-flex ">
-			  <form class="form-inline" method="GET" action="{% url 'buscar_item' %}" >
-			    <input class="form-control mr-sm-2" type="search" placeholder="O que procura?" name="busca" onmouseover="audio_desc('input')" autofocus>
+			  <form class="form-inline" method="POST" action="{% url 'buscar_item' %}" >
+				{% csrf_token %}
+				<input class="form-control mr-sm-2" type="search" placeholder="O que procura?" name="busca" onmouseover="audio_desc('input')" autofocus>
 			    <button class="btn btn-primary my-2 my-sm-0" type="submit" onmouseover="audio_desc('button')">Search</button>
 			  </form>
 			</nav>
@@ -109,24 +115,24 @@ onload="audio_desc('{{page_desc.key}}')"
 		<div class="col-md-4">
 			<!--h2><a href="#" class="btn btn-primary btn-lg  btn-block active" onmouseover="audio_desc('sys_referencia')"role="button" aria-pressed="true" >Referências</a></h2-->
 
-			<a href="{% url 'index' %}" class="btn btn-primary btn-lg  btn-block active" onmouseover="audio_desc('home')">Pagina inicial</a>
+			<a href="{% url 'index' %}" class="btn btn-primary btn-lg  btn-block active" onmouseover="audio_desc('home')" onmouseout="audio_stop('home')">Pagina inicial</a>
 
 			{% if error %}
 			<span>{{error}}</span>
 			{% endif %}
 			{% if page_links %}
 				{% for link in page_links %}
-				<span onmouseover="audio_desc('{{link.id_name}}')" onclick="show_content('show','{{link.items.all.0.id_description}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">{{link.name|title}}</span>
+				<span onmouseover="audio_desc('{{link.id_name}}')" onmouseout="audio_stop('{{link.id_name}}')" onclick="show_content('show','{{link.items.all.0.id_description}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">{{link.name|title}}</span>
 				{% endfor %}
 			{% endif %}
 
 
 	{% if page_links.has_previous %}
-		 <a class="btn btn-primary btn-lg  btn-block active" href="?page={{ page_links.previous_page_number }}" tabindex="-1" onmouseover="audio_desc('anterior')">Página Anterior</a>
+		 <a class="btn btn-primary btn-lg  btn-block active" href="?page={{ page_links.previous_page_number }}" tabindex="-1" onmouseover="audio_desc('anterior')" onmouseout="audio_stop('anterior')">Página Anterior</a>
 	{% endif %}
 
 	{% if page_links.has_next %}
-		<a class="btn btn-primary btn-lg  btn-block active" href="?page={{ page_links.next_page_number }}" onmouseover="audio_desc('proxima')">Próxima Página</a>
+		<a class="btn btn-primary btn-lg  btn-block active" href="?page={{ page_links.next_page_number }}" onmouseover="audio_desc('proxima')" onmouseout="audio_stop('proxima')">Próxima Página</a>
 	{% endif %}
 
 	<!--nav aria-label="...">
@@ -172,7 +178,7 @@ onload="audio_desc('{{page_desc.key}}')"
 			{% if page_links %}
 				{% for link in page_links %}
 					<span  id="{{link.items.all.0.id_description}}" style="display: none" >
-					<p onmouseover="audio_desc('{{link.items.all.0.path_audio}}')">{{link.items.all.0.description}}</p>
+					<p onmouseover="audio_desc('{{link.items.all.0.path_audio}}')" onmouseout="audio_stop('{{link.items.all.0.path_audio}}')">{{link.items.all.0.description}}</p>
 					<form method="POST" action="{% url 'link' %}">
 						{% csrf_token %}
 						<input type="hidden" name="link" value="{{link.items.all.0.description}}">
