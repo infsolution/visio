@@ -152,9 +152,9 @@ function desc_confirm(input){
 					<form method="POST" action="{% url 'link' %}">
 						{% csrf_token %}
 						<input type="hidden" name="link" value="{{link.items.all.0.description}}">
-						<input class="btn btn-primary btn-lg  btn-block active" type="submit" value="Visitar" onmouseover="audio_desc('visitar')" onclick="audio_desc('aguarde')">
+						<input class="btn btn-primary btn-lg  btn-block active" type="submit" value="{{link.items.all.0.description}}" onmouseover="audio_desc('{{link.items.all.0.path_audio}}')" onclick="audio_desc('aguarde')" onmouseout="audio_stop('{{link.items.all.0.path_audio}}')">
 					</form>
-					<p onmouseover="audio_desc('{{link.items.all.0.path_audio}}')" onmouseout="audio_stop('{{link.items.all.0.path_audio}}')">{{link.items.all.0.description}}</p>
+					<!--p onmouseover="audio_desc('{{link.items.all.0.path_audio}}')" onmouseout="audio_stop('{{link.items.all.0.path_audio}}')">{{link.items.all.0.description}}</p-->
 					</span>
 				{% endfor %}
 			{% endif %}
