@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<title>MakeVisio</title>
+	<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fontawesome/css/fontawesome-all.min.css' %}">
+	<style type="text/css">
+		.row{height: 100vh;}
+	</style>
+<script>
+function audio_desc(element){
+    const espeak_links = document.getElementById(element);
+    espeak_links.play();
+}
+
+function show_content(element, text){
+	var show_item = document.getElementById(element).innerHTML=document.getElementById(text).innerHTML;
+}
+
+function getCoordinate(e) {
+		  	var x = e.clientX;
+		  	var y = e.clientY;
+		  	var wt = screen.width;
+		  	var ht = screen.height;
+
+  			if(x <= 5){
+  				const espeak_links = document.getElementById('esquerda');
+  				espeak_links.play();
+  			}
+  			if(x >= wt-5){
+  				const espeak_links = document.getElementById('direita');
+  				espeak_links.play();
+  			}
+  			if(y <= 5){
+  				const espeak_links = document.getElementById('topo');
+  				espeak_links.play();
+  			}
+  			if(y >= 550){
+  				const espeak_links = document.getElementById('bottom');
+  				espeak_links.play();
+  			}
+		}
+function audio_stop(element){
+	var audio = document.getElementById(element);
+	audio.pause()
+	audio.currentTime = 0;
+}
+function voltar(){
+	window.history.back()
+}
+function desc_confirm(input){
+	var audio
+	var valor = document.getElementById(input)
+	if(valor.value == ''){
+		audio = document.getElementById('alert_input').play()
+	}else{
+		audio =document.getElementById('aguarde').play()
+	}
+}
+</script>
+</head>
+
+<body onload="audio_desc('well_come_do')" >
+<div  onmousemove="getCoordinate(event)">
+
+	<audio src="/media/sys/sys_esquerda.wav" id="esquerda"></audio>
+	<audio src="/media/sys/sys_direita.wav" id="direita"></audio>
+	<audio src="/media/sys/sys_topo.wav" id="topo"></audio>
+	<audio src="/media/sys/sys_bottom.wav" id="bottom"></audio>
+	<audio src="/media/sys/sys_well_come_doc.wav" id="well_come_doc"></audio>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-4">
+				<span onmouseover="audio_desc('')" onmouseout="audio_stop('')" onclick="" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true"></span>
+			</div>
+			<div class="col-md-8">
+
+			</div>
+		</div>
+	</div>
+
+
+</div>
+	<script defer src="{% static 'fontawesome/js/fontawesome-all.min.js' %}"></script>
+	<script src="{% static 'bootstrap/js/jquery.min.js' %}"></script>
+	<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+	<script src="{% static 'admin/js/myfunctions.js' %}"></script>
+</div>
+</body>
+</html>

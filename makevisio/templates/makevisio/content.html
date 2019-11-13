@@ -14,6 +14,11 @@ function audio_desc(element){
     const espeak_links = document.getElementById(element);
     espeak_links.play();
 }
+function audio_desc_aguard(element){
+    const espeak_links = document.getElementById(element);
+    espeak_links.play();
+    setTimeout(aguardar,4200)
+}
 /*function audio_desc_list(object){
 	object.forEach(function (value,index, array) {
 		value.play()
@@ -69,7 +74,12 @@ function desc_confirm(input){
 		audio = document.getElementById('alert_input').play()
 	}else{
 		audio =document.getElementById('aguarde').play()
+		setTimeout(aguardar,4200)
 	}
+}
+
+function aguardar(){
+	sound = document.getElementById('sound').play()
 }
 </script>
 </head>
@@ -95,6 +105,7 @@ function desc_confirm(input){
 	<audio src="/media/sys/sys_proxima.wav" id="proxima"></audio>
 	<audio src="/media/sys/sys_anterior.wav" id="anterior"></audio>
 	<audio src="/media/sys/sys_pronta.wav" id="pronta"></audio>
+	<audio src="/media/sys/sys_music_aguard.mp3" id="sound"></audio>
 	<audio src="/media/sys/sys_aguarde.wav" id="aguarde"></audio>
 	<audio src="/media/sys/sys_alert_input.wav" id="alert_input"></audio>
 
@@ -130,7 +141,7 @@ function desc_confirm(input){
 			<form method="POST" action="{% url 'link' %}" class="btn btn-primary btn-sm  btn-block active">
 				{% csrf_token %}
 				<input type="hidden" name="link" value="{{link.link}}">
-				<input class="btn btn-primary btn-lg  btn-block active" type="submit" value="{{ link.title }}" onmouseover="audio_desc('{{link.title_id}}')" onmouseout="audio_stop('{{link.title_id}}')"role="button" aria-pressed="true" onclick="audio_desc('aguarde')">
+				<input class="btn btn-primary btn-lg  btn-block active" type="submit" value="{{ link.title }}" onmouseover="audio_desc('{{link.title_id}}')" onmouseout="audio_stop('{{link.title_id}}')"role="button" aria-pressed="true" onclick="audio_desc_aguard('aguarde')">
 			</form>
 			{% endfor %}
 			{% endif %}

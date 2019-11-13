@@ -87,3 +87,5 @@ def paginacao(request, start_id):
 	except InvalidPage:
 		items_page = paginator.get_page(1)
 	return render(request, 'makevisio/page_links.html',{'page_links':items_page, 'page':[]})
+def documentacao(request):
+	return render(request, 'makevisio/documentacao.html')

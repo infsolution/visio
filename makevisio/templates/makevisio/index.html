@@ -36,7 +36,7 @@
   				const espeak_links = document.getElementById('topo');
   				espeak_links.play();
   			}
-  			if(y == ht-5){
+  			if(y >= 550){
   				const espeak_links = document.getElementById('bottom');
   				espeak_links.play();
   			}
@@ -49,7 +49,12 @@ function desc_confirm(input){
 		audio = document.getElementById('alert_input').play()
 	}else{
 		audio =document.getElementById('aguarde').play()
+		setTimeout(aguardar,4200)
 	}
+}
+
+function aguardar(){
+	sound = document.getElementById('sound').play()
 }
 </script>
 
@@ -66,6 +71,7 @@ function desc_confirm(input){
 	<audio src="/media/sys/sys_topo.wav" id="topo"></audio>
 	<audio src="/media/sys/sys_bottom.wav" id="bottom"></audio>
 	<audio src="/media/sys/sys_aguarde.wav" id="aguarde"></audio>
+	<audio src="/media/sys/sys_music_aguard.mp3" id="sound"></audio>
 	<audio src="/media/sys/sys_alert_input.wav" id="alert_input"></audio>
 	<div class="container-fluid">
 		<div class="row justify-content-center align-items-center">

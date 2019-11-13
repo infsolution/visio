@@ -14,7 +14,11 @@ function audio_desc(element){
     const espeak_links = document.getElementById(element);
     espeak_links.play();
 }
-
+function audio_desc_aguard(element){
+    const espeak_links = document.getElementById(element);
+    espeak_links.play();
+    setTimeout(aguardar,4200)
+}
 function show_content(element, text){
 	var show_item = document.getElementById(element).innerHTML=document.getElementById(text).innerHTML;
 }
@@ -58,7 +62,12 @@ function desc_confirm(input){
 		audio = document.getElementById('alert_input').play()
 	}else{
 		audio =document.getElementById('aguarde').play()
+		setTimeout(aguardar,4200)
 	}
+}
+
+function aguardar(){
+	sound = document.getElementById('sound').play()
 }
 </script>
 </head>
@@ -84,6 +93,7 @@ function desc_confirm(input){
 	<audio src="/media/sys/sys_proxima.wav" id="proxima"></audio>
 	<audio src="/media/sys/sys_anterior.wav" id="anterior"></audio>
 	<audio src="/media/sys/sys_page_links.wav" id="page_links"></audio>
+	<audio src="/media/sys/sys_music_aguard.mp3" id="sound"></audio>
 	<audio src="/media/sys/sys_aguarde.wav" id="aguarde"></audio>
 	<audio src="/media/sys/sys_alert_input.wav" id="alert_input"></audio>
 
@@ -121,9 +131,17 @@ function desc_confirm(input){
 			{% if error %}
 			<span>{{error}}</span>
 			{% endif %}
+			<!--onclick="show_content('show','{{link.items.all.0.id_description}}')"-->
 			{% if page_links %}
 				{% for link in page_links %}
-				<span onmouseover="audio_desc('{{link.id_name}}')" onmouseout="audio_stop('{{link.id_name}}')" onclick="show_content('show','{{link.items.all.0.id_description}}')" class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">{{link.name|title}}</span>
+				<span onmouseover="audio_desc('{{link.id_name}}')" onmouseout="audio_stop('{{link.id_name}}')"  class="btn btn-primary btn-lg  btn-block active" role="button" aria-pressed="true">
+				<form method="POST" action="{% url 'link' %}">
+						{% csrf_token %}
+						<input type="hidden" name="link" value="{{link.items.all.0.description}}">
+						<input class="btn btn-primary btn-block active" type="submit" value="{{link.name|title}}"  onclick="audio_desc_aguard('aguarde')">
+					</form>
+
+				</span>
 				{% endfor %}
 			{% endif %}
 
@@ -152,7 +170,7 @@ function desc_confirm(input){
 					<form method="POST" action="{% url 'link' %}">
 						{% csrf_token %}
 						<input type="hidden" name="link" value="{{link.items.all.0.description}}">
-						<input class="btn btn-primary btn-lg  btn-block active" type="submit" value="{{link.items.all.0.description}}" onmouseover="audio_desc('{{link.items.all.0.path_audio}}')" onclick="audio_desc('aguarde')" onmouseout="audio_stop('{{link.items.all.0.path_audio}}')">
+						<input class="btn btn-primary btn-lg  btn-block active" type="submit" value="{{link.items.all.0.description}}" onmouseover="audio_desc('{{link.items.all.0.path_audio}}')" onclick="audio_desc_aguard('aguarde')" onmouseout="audio_stop('{{link.items.all.0.path_audio}}')">
 					</form>
 					<!--p onmouseover="audio_desc('{{link.items.all.0.path_audio}}')" onmouseout="audio_stop('{{link.items.all.0.path_audio}}')">{{link.items.all.0.description}}</p-->
 					</span>

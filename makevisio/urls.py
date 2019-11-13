@@ -9,7 +9,8 @@ urlpatterns = [
 	path('next/', views.search_next, name='next'),
 	path('page/',views.get_page, name='page'),
 	path('link/',views.get_page_link, name='link'),
-	path('paginacao/<int:start_id>/', views.paginacao, name='paginacao')
+	path('paginacao/<int:start_id>/', views.paginacao, name='paginacao'),
+	path('documentacao', views.documentacao,name='documentacao'),
 ]
 if settings.DEBUG:
 	urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

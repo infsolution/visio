@@ -14,6 +14,11 @@ function audio_desc(element){
     const espeak_links = document.getElementById(element);
     espeak_links.play(); 
 }
+function audio_desc_aguard(element){
+    const espeak_links = document.getElementById(element);
+    espeak_links.play();
+    setTimeout(aguardar,4200)
+}
 /*function audio_desc_list(object){
 	object.forEach(function (value,index, array) {
 		value.play()
@@ -49,7 +54,7 @@ function getCoordinate(e) {
   				const espeak_links = document.getElementById('topo');
   				espeak_links.play();
   			}
-  			if(y == ht-5){
+  			if(y >= 550){
   				const espeak_links = document.getElementById('bottom');
   				espeak_links.play();
   			}
@@ -69,7 +74,12 @@ function desc_confirm(input){
 		audio = document.getElementById('alert_input').play()
 	}else{
 		audio =document.getElementById('aguarde').play()
+		setTimeout(aguardar,4200)
 	}
+}
+
+function aguardar(){
+	sound = document.getElementById('sound').play()
 }
 </script>
 
@@ -91,6 +101,7 @@ function desc_confirm(input){
 	<audio src="/media/sys/sys_visitar.wav" id="visitar"></audio>
 	<audio src="/media/sys/sys_links.wav" id="links"></audio>
 	<audio src="/media/sys/sys_pronta.wav" id="pronta"></audio>
+	<audio src="/media/sys/sys_music_aguard.mp3" id="sound"></audio>
 	<audio src="/media/sys/sys_aguarde.wav" id="aguarde"></audio>
 	<audio src="/media/sys/sys_anterior.wav" id="anterior"></audio>
 	<audio src="/media/sys/sys_alert_input.wav" id="alert_input"></audio>
@@ -113,10 +124,7 @@ function desc_confirm(input){
 
 
 	<div class="container-fluid">
-		<!--nav class="navbar navbar-light bg-light">
-		  <a class="navbar-brand" href="{% url 'index' %}" onmouseover="audio_desc('home')">Makevisio</a>
-		  <h1 onmouseover="audio_desc('logo')">Makevisio</h1>
-		</nav-->
+
 		<div class="row  justify-content-center">
 			<nav class="navbar navbar-light bg-light d-flex ">
 			  <form class="form-inline" method="POST" action="{% url 'buscar_item' %}" >
@@ -127,7 +135,7 @@ function desc_confirm(input){
 			</nav>
 		</div>
 		<br/>
-		<!--p id="demo"></p-->
+
 	{% block body %}
     {% endblock %}
 
