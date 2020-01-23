@@ -14,3 +14,12 @@ tela, porém as limitações desses e o descumprimento das regras de acessibilid
 usabilidade e a experiência do usuário cego. Este trabalho apresenta a Makevsio, uma plataforma
 acessível pela internet que converte páginas de sítios eletrônicos para exibi-las de forma adequada
 a pessoas com deficiência visual.
+
+# Aplicação
+Makevisio é uma plataforma acessível pela internet, que converte páginas de sítios
+eletrônicos, disponibilizando-as de forma acessíveis para pessoas com deficiência visual. O
+usuário deve ser familiarizado com o uso do computador e conhecer os conceitos básicos
+de navegação na web, como url, site, navegador ou browser. O site foi desenvolvido com a
+linguagem de programação Python, utilizando o framework para desenvolvimento de plataformas
+web Django e Javascript. Para sintetizar texto em voz, foi utilizado o software de código aberto
+Espeak.
